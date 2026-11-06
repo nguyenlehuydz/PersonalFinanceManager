@@ -1,7 +1,6 @@
 #ifndef DATE_H
 #define DATE_H
-#include<bits/stdc++.h>
-using namespace std;
+#include<string>
 
 class Date{
 private:
@@ -23,14 +22,21 @@ public:
     int getMonth() const;
     int getDay() const;
 
-    string toString() const;
+    std::string toString() const;
+    static Date fromString(const std::string& dateStr); // Load Date object from a string format
+    
+    bool operator==(const Date& other) const;
+    bool operator!=(const Date& other) const;
+    bool operator<(const Date& other) const;
+    bool operator<=(const Date& other) const;
+    bool operator>(const Date& other) const;
+    bool operator>=(const Date& other) const;
 
-    static Date fromString(const string& dateStr); // Load Date object from a string format
-
-    void display() const;
-
-    // Static function to handle interactive input in dd-mm-yyyy format with error validation
-    static Date inputDate();
+    long long DistanceDateBetweenTwoDates(const Date&d1,const Date&d2);
+    long long distanceBetween(const Date& other) const;
+    
+    Date addDays(int k) const;
+    Date subtractDays(int k) const;
 };
 
 #endif
