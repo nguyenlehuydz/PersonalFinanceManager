@@ -32,6 +32,8 @@ public:
     bool operator>(const Date& other) const;
     bool operator>=(const Date& other) const;
 
+    long long Date::distanceToCommonEra() const;
+    long long Date::distanceBetween(const Date& other) const;
     long long DistanceDateBetweenTwoDates(const Date&d1,const Date&d2);
     long long distanceBetween(const Date& other) const;
     
