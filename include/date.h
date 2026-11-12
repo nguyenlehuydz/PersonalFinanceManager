@@ -15,7 +15,6 @@ public:
     Date(); // Auto get the current system date
     Date(int y,int m,int d);
 
-    void setCurrentDate();
     bool setDate(int y,int m,int d);
     
     int getYear() const;
@@ -24,7 +23,7 @@ public:
 
     std::string toString() const;
     static Date fromString(const std::string& dateStr); // Load Date object from a string format
-    
+    static Date today();
     bool operator==(const Date& other) const;
     bool operator!=(const Date& other) const;
     bool operator<(const Date& other) const;
@@ -32,13 +31,6 @@ public:
     bool operator>(const Date& other) const;
     bool operator>=(const Date& other) const;
 
-    long long Date::distanceToCommonEra() const;
-    long long Date::distanceBetween(const Date& other) const;
-    long long DistanceDateBetweenTwoDates(const Date&d1,const Date&d2);
-    long long distanceBetween(const Date& other) const;
-    
-    Date addDays(int k) const;
-    Date subtractDays(int k) const;
 };
 
 #endif
