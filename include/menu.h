@@ -1,8 +1,14 @@
-#ifdef MENU_H
-#define MENY_H
-#include "ManagerFinance.h" // Not Sure For Name Of File
+#ifndef MENU_H
+#define MENU_H
 
-void showMainMenu();
-void runMenu(FinanceManager&manager);
+class Menu{
+public:
+    void run();
+private:
+    void clearScreen() const;
+    void showHeader()const;
+    void showOptions()const;
+    void handleChoice(int &choice, bool & isRunning);
+};
 
 #endif

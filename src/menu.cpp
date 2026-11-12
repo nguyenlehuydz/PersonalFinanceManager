@@ -1,55 +1,99 @@
 #include "menu.h"
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include <limits>
+#include <cstdlib>
 
-void showMainMenu() {
-    cout << "\n========== PERSONAL FINANCE MANAGER ==========\n";
-    cout << "1. Manage Income\n";
-    cout << "2. Manage Expenses\n";
-    cout << "3. Manage Income Sources\n";
-    cout << "4. Manage Expense Categories\n";
-    cout << "5. Manage Wallets\n";
-    cout << "6. Statistics\n";
-    cout << "0. Exit\n";
-    cout << "==============================================\n";
-    cout << "Enter your choice: ";
-
+namespace Color {
+    const std::string RESET = "\033[0m";
+    const std::string BOLD = "\033[1m";
+    const std::string CYAN = "\033[36m";
+    const std::string GREEN = "\033[32m";
+    const std::string YELLOW = "\033[33m";
+    const std::string RED = "\033[31m";
+    const std::string MAGENTA = "\033[35m";
 }
 
-void runMenu(FinanceManager&manager) {
-    int choice;
-    do {
-        showMainMenu();
-        if (!(cin >> choice)) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input. Please enter a number.\n";
-            continue;
-        }
-        switch (choice) {
+void Menu::clearScreen() const {
+#ifdef _WIN32
+    std::system("cls");
+#else
+    std::system("clear");
+#endif
+}
+
+
+void Menu::showHeader() const {
+    std::cout << Color::CYAN << Color::BOLD;
+    std::cout << "  ┌────────────────────────────────────────┐\n";
+    std::cout << "  │     PERSONAL FINANCE MANAGEMENT        |\n";
+    std::cout << "  └────────────────────────────────────────┘\n";
+    std::cout << Color::RESET;
+    return;
+}
+
+void Menu::showOptions() const {
+    std::cout << Color::YELLOW << "  Please select an option:\n" << Color::RESET;
+    std::cout << "  ------------------------------------------\n";
+    std::cout << "  " << Color::GREEN << "[1]" << Color::RESET << " Wallet Management\n";
+    std::cout << "  " << Color::GREEN << "[2]" << Color::RESET << " Transaction Management\n";
+    std::cout << "  " << Color::GREEN << "[3]" << Color::RESET << " Recurring Transactions\n";
+    std::cout << "  " << Color::GREEN << "[4]" << Color::RESET << " Statistics by Date Range\n";
+    std::cout << "  " << Color::RED << "[0]" << Color::RESET << " Exit Application\n";
+    std::cout << "  ------------------------------------------\n";
+    std::cout << Color::BOLD << "  Enter your choice: " << Color::RESET;
+    return;
+}
+
+void Menu::handleChoice(int &choice, bool& isRunning) {
+    std::cout << "\n";
+    switch (choice) {
         case 1:
-            showIncomeMenu(manager);
+            std::cout << Color::MAGENTA << "  [INFO] Opening Wallet Management..." << Color::RESET << "\n";
             break;
         case 2:
-            cout << "Expense management is under development.\n";
+            std::cout << Color::MAGENTA << "  [INFO] Opening Transaction Management..." << Color::RESET << "\n";
             break;
         case 3:
-            showIncomeSourceMenu(manager);
+            std::cout << Color::MAGENTA << "  [INFO] Opening Recurring Transactions..." << Color::RESET << "\n";
             break;
         case 4:
-            showExpenseCategoryMenu(manager);
-            break;
-        case 5:
-            showWalletMenu(manager);
-            break;
-        case 6:
-            cout << "Statistics is under development.\n";
+            std::cout << Color::MAGENTA << "  [INFO] Opening Date Range Statistics..." << Color::RESET << "\n";
             break;
         case 0:
-            cout << "Exiting the program...\n";
+            std::cout << Color::GREEN << "  Thank you for using the application. Goodbye!" << Color::RESET << "\n";
+            isRunning = false;
             break;
         default:
-            cout << "Invalid choice. Please try again.\n";
-        }
-    } while (choice != 0);
+            std::cout << Color::RED << "  [ERROR] Invalid choice! Please select a number from 0 to 4." << Color::RESET << "\n";
+    }
+    return;
 }
+
+void Menu::run() {
+    bool isRunning = true;
+    int choice{};
+    while (isRunning) {
+        clearScreen();
+        showHeader();
+        showOptions();
+        if (!(std::cin >> choice)) {
+            std::cout << "\n  " << Color::RED << "[ERROR] Please enter a valid integer!" << Color::RESET << "\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "\n  Press Enter to continue...";
+            std::cin.get();
+            continue;
+        }
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        handleChoice(choice, isRunning);
+        if (isRunning) {
+            std::cout << "\n  Press Enter to continue...";
+            std::cin.get();
+        }
+    }
+    return;
+}
+
+
+
+
