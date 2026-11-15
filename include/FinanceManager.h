@@ -20,5 +20,11 @@ struct YearSummary {
     long long netBalance;
 };
 
+class FinanceManager {
+    private:
+        
+    public:
+};
+
 
 
