@@ -1,5 +1,10 @@
 #pragma once
 #include <string>
+#include "DynamicArray.h"
+#include "Wallet.h"
+#include "Income.h"
+#include "Expense.h"
+#include "RecurringTransaction.h"
 
 struct SourceSummary {
     std::string sourceID;
@@ -22,8 +27,33 @@ struct YearSummary {
 
 class FinanceManager {
     private:
-        
+        DynamicArray<Wallet> wallets;
+        DynamicArray<IncomeSource> incomeSources;
+        DynamicArray<ExpenseCategory> expenseCategories;   
+        DyanamicArray<Income> incomes;
+        DynamicArray<Expense> expenses;
+        DynamicArray<RecurrringTransaction> recurrTrans;
+
+        std::string dateFilePath;
+        bool XMLStorage;
+
+        int nextIncomeID;
+        int nextExpenseID;
+        int nextRecurrID;
+
+        void synchNextID();
+
     public:
+        FinanceManager(const std::string& dataFilePath = "data/finance_data.xml", bool useXML = true);
+
+        void initializeDefault();
+
+        bool loadData();
+        bool saveData();
+
+        // Wallet Management
+        const DynamicArray<Wallet> &getWallets() const;
+
 };
 
 
