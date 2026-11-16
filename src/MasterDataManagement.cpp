@@ -75,7 +75,7 @@ bool FinanceManager::editIncomeSource(const std::string &id, const std::string &
     for (int i = 0; i < incomeSources.size(); i++) {
         if (incomeSources[i].getId() == id) {
             if (!newName.empty()) incomeSources[i].setName(newName);
-            savedata();
+            saveData();
             return true;
         }
     }
@@ -86,7 +86,7 @@ bool FinanceManager::deleteIncomeSource(const std::string &id) {
     for (int i = 0; i < incomeSources.size(); i++) {
         if (incomeSources[i].getId() == id) {
             incomeSources.remove(id);
-            savedata();
+            saveData();
             return true;
         }
     }
@@ -95,4 +95,53 @@ bool FinanceManager::deleteIncomeSource(const std::string &id) {
 std::string FinanceManager::getIncomeSourceName(const std::string &id) const{
     const IncomeSource *ptr = findIncomeSource(id);
     return ptr? ptr->getName() : ("Unknown (" + id ")");
+}
+
+// Expense Categories
+const DynamicArray<ExpenseCategory> FinanceManager::getExpenseCategories() const {
+    return expenseCategories;
+}
+
+const ExpenseCategory *FinanceManager::findExpenseCategory(const std::string &id) const {
+    for (int i = 0; i < expenseCategories.size(); i++) {
+        if (expenseCategories[i].getId() == id) {
+            return &expenseCategories[i];
+        }
+    }
+    return nullptr;
+}
+
+bool FinanceManager::addExpenseCategory(const std::string &id, const std::string &name) {
+    if (id.empty() || name.empty()) return false;
+    if (findExpenseCategory(id) != nullptr) return false;
+    expenseCategories.push(ExpenseCategory(id, name));
+    saveData();
+    return true;
+}
+
+bool FinanceManager::editExpenseCategory(const std::string &id, const std::string &newName) {
+    for (int i = 0; i < expenseCategories.size(); i++) {
+        if (expenseCategories[i].getId() == id) {
+            if (!newName.empty()) expenseCategories.setName(newName);
+            saveData();
+            return true;
+        }
+    }
+    return false;
+}
+
+bool FinanceManager::deleteExpenseCategory(const std::string &id) {
+    for (int i = 0; i < expenseCategories.size(); i++) {
+        if (expenseCategories[i].getId() == id) {
+            expenseCategories.remove(i);
+            saveData();
+            return true;
+        }
+    }
+    return false;
+}
+
+std::string FinanceManager::getExpenseCategoryName(const std::string &id) {
+    const ExpenseCategory *ptr = findExpenseCategory(id);
+    return ptr? ptr->getName() : ("Unknown (" + id + ")");
 }
