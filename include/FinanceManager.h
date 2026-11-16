@@ -52,11 +52,11 @@ class FinanceManager {
         bool saveData();
 
         // Wallets
-        const DynamicArray<Wallet> &getWallets() const;
+        const DynamicArray<Wallet> &FinanceManager::getWallets() const;
         const Wallet *FinanceManager::findWallet(const std::string &id) const;
         bool FinanceManager::addWallet(const std::string &id, const std::string &name, double iniBalance);
-        bool FinanceManager::editWallet(const std::string &id, const std::string &newName, const std::string &newIniBalance);
-        FinanceManager::deleteWallet(const std::string &id);
+        bool FinanceManager::editWallet(const std::string &id, const std::string &newName, long long newIniBalance);
+        bool FinanceManager::deleteWallet(const std::string &id);
         std::string FinanceManager::getWalletName(const std::string &id) const;
 
         //Income Sources
@@ -64,17 +64,16 @@ class FinanceManager {
         const IncomeSource *FinanceManager::findIncomeSource(const std::string &id) const;
         bool FinanceManager::addIncomeSource(const std::string &id, const std::string &name);
         bool FinanceManager::editIncomeSource(const std::string &id, const std::string &newName);
-        bool FinanceManager::editIncomeSource(const std::string &id, const std::string &newName);
         bool FinanceManager::deleteIncomeSource(const std::string &id);
         std::string FinanceManager::getIncomeSourceName(const std::string &id) const;
 
         // Expense Categories
-        const DynamicArray<ExpenseCategory> FinanceManager::getExpenseCategories() const;
+        const DynamicArray<ExpenseCategory> &FinanceManager::getExpenseCategories() const;
         const ExpenseCategory *FinanceManager::findExpenseCategory(const std::string &id) const;
         bool FinanceManager::addExpenseCategory(const std::string &id, const std::string &name);
         bool FinanceManager::editExpenseCategory(const std::string &id, const std::string &newName);
         bool FinanceManager::deleteExpenseCategory(const std::string &id);
-        std::string FinanceManager::getExpenseCategoryName(const std::string &id);
+        std::string FinanceManager::getExpenseCategoryName(const std::string &id) const;
 };
 
 

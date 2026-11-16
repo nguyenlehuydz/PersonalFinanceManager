@@ -1,5 +1,4 @@
 #include "../include/FinanceManager.h"
-#include <iostream>
 
 // Wallet List
 const DynamicArray<Wallet> &FinanceManager::getWallets() const {
@@ -13,15 +12,15 @@ const Wallet *FinanceManager::findWallet(const std::string &id) const {
     return nullptr;
 }
 
-bool FinanceManager::addWallet(const std::string &id, const std::string &name, double iniBalance) {
+bool FinanceManager::addWallet(const std::string &id, const std::string &name, long long iniBalance) {
     if (id.empty() || name.empty()) return false;
-    if (findWallet(id) == nullptr) return false;
-    wallets.push_back(Wallet(id, name, iniBalance));
+    if (findWallet(id) != nullptr) return false;
+    wallets.push(Wallet(id, name, iniBalance));
     saveData();
     return true;
 }
 
-bool FinanceManager::editWallet(const std::string &id, const std::string &newName, const std::string &newIniBalance) {
+bool FinanceManager::editWallet(const std::string &id, const std::string &newName, long long newIniBalance) {
     for (int i = 0; i < wallets.size(); i++) {
         if (wallets[i].getId() == id) {
             if (!newName.empty()) wallets[i].setName(newName);
@@ -56,7 +55,7 @@ const DynamicArray<IncomeSource> &FinanceManager::getIncomeSources() const {
 
 const IncomeSource *FinanceManager::findIncomeSource(const std::string &id) const {
     for (int i = 0; i < incomeSources.size(); i++) {
-        if (incomeSources.getId() == id) {
+        if (incomeSources[i].getId() == id) {
             return &incomeSources[i];
         }
     }
@@ -85,7 +84,7 @@ bool FinanceManager::editIncomeSource(const std::string &id, const std::string &
 bool FinanceManager::deleteIncomeSource(const std::string &id) {
     for (int i = 0; i < incomeSources.size(); i++) {
         if (incomeSources[i].getId() == id) {
-            incomeSources.remove(id);
+            incomeSources.remove(i);
             saveData();
             return true;
         }
@@ -94,11 +93,11 @@ bool FinanceManager::deleteIncomeSource(const std::string &id) {
 }
 std::string FinanceManager::getIncomeSourceName(const std::string &id) const{
     const IncomeSource *ptr = findIncomeSource(id);
-    return ptr? ptr->getName() : ("Unknown (" + id ")");
+    return ptr? ptr->getName() : ("Unknown (" + id + ")");
 }
 
 // Expense Categories
-const DynamicArray<ExpenseCategory> FinanceManager::getExpenseCategories() const {
+const DynamicArray<ExpenseCategory> &FinanceManager::getExpenseCategories() const {
     return expenseCategories;
 }
 
@@ -122,7 +121,7 @@ bool FinanceManager::addExpenseCategory(const std::string &id, const std::string
 bool FinanceManager::editExpenseCategory(const std::string &id, const std::string &newName) {
     for (int i = 0; i < expenseCategories.size(); i++) {
         if (expenseCategories[i].getId() == id) {
-            if (!newName.empty()) expenseCategories.setName(newName);
+            if (!newName.empty()) expenseCategories[i].setName(newName);
             saveData();
             return true;
         }
@@ -141,7 +140,7 @@ bool FinanceManager::deleteExpenseCategory(const std::string &id) {
     return false;
 }
 
-std::string FinanceManager::getExpenseCategoryName(const std::string &id) {
+std::string FinanceManager::getExpenseCategoryName(const std::string &id) const {
     const ExpenseCategory *ptr = findExpenseCategory(id);
     return ptr? ptr->getName() : ("Unknown (" + id + ")");
 }
