@@ -59,7 +59,7 @@ class FinanceManager {
         FinanceManager::deleteWallet(const std::string &id);
         std::string FinanceManager::getWalletName(const std::string &id) const;
 
-        //Income Source
+        //Income Sources
         const DynamicArray<IncomeSource> &FinanceManager::getIncomeSources() const;
         const IncomeSource *FinanceManager::findIncomeSource(const std::string &id) const;
         bool FinanceManager::addIncomeSource(const std::string &id, const std::string &name);
@@ -67,6 +67,14 @@ class FinanceManager {
         bool FinanceManager::editIncomeSource(const std::string &id, const std::string &newName);
         bool FinanceManager::deleteIncomeSource(const std::string &id);
         std::string FinanceManager::getIncomeSourceName(const std::string &id) const;
+
+        // Expense Categories
+        const DynamicArray<ExpenseCategory> FinanceManager::getExpenseCategories() const;
+        const ExpenseCategory *FinanceManager::findExpenseCategory(const std::string &id) const;
+        bool FinanceManager::addExpenseCategory(const std::string &id, const std::string &name);
+        bool FinanceManager::editExpenseCategory(const std::string &id, const std::string &newName);
+        bool FinanceManager::deleteExpenseCategory(const std::string &id);
+        std::string FinanceManager::getExpenseCategoryName(const std::string &id);
 };
 
 
