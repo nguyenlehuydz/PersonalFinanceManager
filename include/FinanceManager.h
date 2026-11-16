@@ -51,8 +51,13 @@ class FinanceManager {
         bool loadData();
         bool saveData();
 
-        // Wallet Management
+        // Wallets
         const DynamicArray<Wallet> &getWallets() const;
+        const Wallet *FinanceManager::findWallet(const std::string &id) const;
+        bool FinanceManager::addWallet(const std::string &id, const std::string &name, double iniBalance);
+        bool FinanceManager::editWallet(const std::string &id, const std::string &newName, const std::string &newIniBalance);
+        FinanceManager::deleteWallet(const std::string &id);
+        std::string FinanceManager::getWalletName(const std::string &id) const;
 
 };
 
