@@ -75,3 +75,16 @@ bool FinanceManager::loadData() {
     return check;
 
 }
+
+bool FinanceManager::saveData() {
+    if (XMLStorage) {
+        return StorageManager::saveXml(dataFilePath, wallets, incomeSources,
+                                       expenseCategories, incomes, expenses,
+                                       recurringTransactions);
+    } else {
+        return StorageManager::saveBinary(dataFilePath, wallets, incomeSources,
+                                          expenseCategories, incomes, expenses,
+                                          recurringTransactions);
+    }
+}
+
