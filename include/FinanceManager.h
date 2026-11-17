@@ -75,10 +75,15 @@ class FinanceManager {
         bool FinanceManager::deleteExpenseCategory(const std::string &id);
         std::string FinanceManager::getExpenseCategoryName(const std::string &id) const;
 
-        //Incomes
+        // Incomes
         const DynamicArray<Income> &FinanceManager::getIncomes() const;
         bool FinanceManager::addIncome(const Date &date, const std::string &sourceId, long long amount, const std::string &walletId, const std::string &description, const std::string &customId);
         bool FinanceManager::deleteIncome(const std::string &id);
+
+        // Expenses
+        const DynamicArray<Expense> &FinanceManager::getExpenses() const;
+        bool FinanceManager::addExpense(const Date &date, const std::string &categoryId, long long amount, const std::string &walletId, const std::string &description, const std::string &customId);
+        bool FinanceManager::deleteExpense(const std::string &id);
 };
 
 
