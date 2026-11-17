@@ -1,5 +1,6 @@
 #include "../include/FinanceManager.h"
 #include <iomanip>
+#include <sstream>
 
 // Incomes
 const DynamicArray<Income> &FinanceManager::getIncomes() const {
@@ -38,7 +39,7 @@ bool FinanceManager::addExpense(const Date &date, const std::string &categoryId,
     std::string id = customId;
     if (id.empty()) {
         std::ostringstream oss;
-        oss << "EXP" << std::setfill("0") << std::setw(4) << nextExpenseID++;
+        oss << "EXP" << std::setfill('0') << std::setw(4) << nextExpenseID++;
         id = oss.str();
     }
     expenses.push(Expense(id, date, categoryId, amount, walletId, description));
