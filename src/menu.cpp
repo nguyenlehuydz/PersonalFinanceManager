@@ -109,8 +109,8 @@ void Menu::showWallet() const {
     else{
         std::cout << "    " 
                   << std::left  << std::setw(6)  << "STT" 
-                  << std::left  << std::setw(20) << "Tên Ví" 
-                  << std::right << std::setw(15) << "Số Dư (VND)" << "\n";
+                  << std::left  << std::setw(20) << "Wallet's name" 
+                  << std::right << std::setw(18) << "Cash (VND)" << "\n";
         std::cout << "    ------------------------------------------\n";
         for(int i=0;i<wallets.size();i++){
             const Wallet& w = wallets[i];
