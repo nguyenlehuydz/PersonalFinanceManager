@@ -7,8 +7,9 @@ public:
 private:
     void clearScreen() const;
     void showHeader()const;
-    void showOptions()const;
+    void showDashboard()const;
     void handleChoice(int &choice, bool & isRunning);
+    void showWallet()const;
 };
 
 #endif

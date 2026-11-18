@@ -1,7 +1,9 @@
-#include "menu.h"
+#include "../include/Menu.h"
+#include "../include/FinanceManager.h"
 #include <iostream>
 #include <limits>
 #include <cstdlib>
+#include <iomanip>
 
 namespace Color {
     const std::string RESET = "\033[0m";
@@ -24,22 +26,27 @@ void Menu::clearScreen() const {
 
 void Menu::showHeader() const {
     std::cout << Color::CYAN << Color::BOLD;
-    std::cout << "  ------------------------------------------\n";
-    std::cout << "  |     PERSONAL FINANCE MANAGEMENT        |\n";
-    std::cout << "  ------------------------------------------\n";
+    std::cout << "  ==================================================\n";
+    std::cout << "  |            PERSONAL FINANCE MANAGEMENT          |\n";
+    std::cout << "  ==================================================\n";
     std::cout << Color::RESET;
     return;
 }
 
-void Menu::showOptions() const {
-    std::cout << Color::YELLOW << "  Please select an option:\n" << Color::RESET;
-    std::cout << "  ------------------------------------------\n";
+void Menu::showDashboard()const {
+    showHeader();
+    long long totalBalance = getTotalBalance();
+    std::cout << Color::BOLD << "  TOTAL BALANCE: " << totalBalance << " VND\n" << Color::RESET;
+    std::cout << "  --------------------------------------------------\n";
+    showWallet();
+    std::cout << "  --------------------------------------------------\n";
+    std::cout << Color::YELLOW << "  NAVIGATION MENU:\n" << Color::RESET;
     std::cout << "  " << Color::GREEN << "[1]" << Color::RESET << " Wallet Management\n";
-    std::cout << "  " << Color::GREEN << "[2]" << Color::RESET << " Transaction Management\n";
+    std::cout << "  " << Color::GREEN << "[2]" << Color::RESET << " Add Transaction\n";
     std::cout << "  " << Color::GREEN << "[3]" << Color::RESET << " Recurring Transactions\n";
-    std::cout << "  " << Color::GREEN << "[4]" << Color::RESET << " Statistics by Date Range\n";
+    std::cout << "  " << Color::GREEN << "[4]" << Color::RESET << " Statistics\n";
     std::cout << "  " << Color::RED << "[0]" << Color::RESET << " Exit Application\n";
-    std::cout << "  ------------------------------------------\n";
+    std::cout << "  --------------------------------------------------\n";
     std::cout << Color::BOLD << "  Enter your choice: " << Color::RESET;
     return;
 }
@@ -51,13 +58,13 @@ void Menu::handleChoice(int &choice, bool& isRunning) {
             std::cout << Color::MAGENTA << "  [INFO] Opening Wallet Management..." << Color::RESET << "\n";
             break;
         case 2:
-            std::cout << Color::MAGENTA << "  [INFO] Opening Transaction Management..." << Color::RESET << "\n";
+            std::cout << Color::MAGENTA << "  [INFO] Opening Add Transaction..." << Color::RESET << "\n";
             break;
         case 3:
             std::cout << Color::MAGENTA << "  [INFO] Opening Recurring Transactions..." << Color::RESET << "\n";
             break;
         case 4:
-            std::cout << Color::MAGENTA << "  [INFO] Opening Date Range Statistics..." << Color::RESET << "\n";
+            std::cout << Color::MAGENTA << "  [INFO] Opening Statistics..." << Color::RESET << "\n";
             break;
         case 0:
             std::cout << Color::GREEN << "  Thank you for using the application. Goodbye!" << Color::RESET << "\n";
@@ -75,7 +82,7 @@ void Menu::run() {
     while (isRunning) {
         clearScreen();
         showHeader();
-        showOptions();
+        showDashboard();
         if (!(std::cin >> choice)) {
             std::cout << "\n  " << Color::RED << "[ERROR] Please enter a valid integer!" << Color::RESET << "\n";
             std::cin.clear();
@@ -94,7 +101,28 @@ void Menu::run() {
     return;
 }
 
-
+void Menu::showWallet() const {
+    std::cout << Color::BOLD << "  WALLET BALANCES:\n" << Color::RESET;
+    if (wallets.size() == 0) {
+        std::cout << "    (No wallet is added)\n";
+    }
+    else{
+        std::cout << "    " 
+                  << std::left  << std::setw(6)  << "STT" 
+                  << std::left  << std::setw(20) << "Tên Ví" 
+                  << std::right << std::setw(15) << "Số Dư (VND)" << "\n";
+        std::cout << "    ------------------------------------------\n";
+        for(int i=0;i<wallets.size();i++){
+            const Wallet& w = wallets[i];
+            std::cout << "    " 
+                      << std::left  << std::setw(6)  << ("[" + std::to_string(i + 1) + "]")
+                      << std::left  << std::setw(20) << w.getName
+                      << std::right << std::setw(18) << getWalletBalance(w.getId())
+                      << "\n";
+        }
+    }
+    return;
+}
 
 
 
