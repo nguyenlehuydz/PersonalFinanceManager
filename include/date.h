@@ -30,7 +30,7 @@ public:
     bool operator<=(const Date& other) const;
     bool operator>(const Date& other) const;
     bool operator>=(const Date& other) const;
-
+    int DateofMonth(int month, int year);
 };
 
 #endif
