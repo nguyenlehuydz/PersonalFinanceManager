@@ -1,4 +1,4 @@
-#include"date.h"
+#include "../include/Date.h"
 #include<string>
 #include<iostream>
 #include<sstream>
@@ -99,4 +99,14 @@ bool Date::operator>=(const Date& other) const {
     return !(*this < other);
 }
 
+int Date::DateofMonth(int month, int year){
+    if(month == 1 || month == 3 || month == 5 || month == 7 || month ==8 || month == 10|| month == 12){
+        return 31;
+    }
+    if(month == 2){
+        if(isLeapYear(year))return 29;
+        return 28;
+    }
+    return 30;
+}
 
