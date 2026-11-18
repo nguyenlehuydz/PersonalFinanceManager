@@ -30,16 +30,16 @@ class FinanceManager {
         DynamicArray<Wallet> wallets;
         DynamicArray<IncomeSource> incomeSources;
         DynamicArray<ExpenseCategory> expenseCategories;   
-        DyanamicArray<Income> incomes;
+        DynamicArray<Income> incomes;
         DynamicArray<Expense> expenses;
-        DynamicArray<RecurrringTransaction> recurrTrans;
+        DynamicArray<RecurringTransaction> recur;
 
-        std::string dateFilePath;
+        std::string dataFilePath;
         bool XMLStorage;
 
         int nextIncomeID;
         int nextExpenseID;
-        int nextRecurrID;
+        int nextRecurID;
 
         void synchNextID();
 
@@ -52,38 +52,46 @@ class FinanceManager {
         bool saveData();
 
         // Wallets
-        const DynamicArray<Wallet> &FinanceManager::getWallets() const;
-        const Wallet *FinanceManager::findWallet(const std::string &id) const;
-        bool FinanceManager::addWallet(const std::string &id, const std::string &name, double iniBalance);
-        bool FinanceManager::editWallet(const std::string &id, const std::string &newName, long long newIniBalance);
-        bool FinanceManager::deleteWallet(const std::string &id);
-        std::string FinanceManager::getWalletName(const std::string &id) const;
+        const DynamicArray<Wallet> &getWallets() const;
+        const Wallet *findWallet(const std::string &id) const;
+        bool addWallet(const std::string &id, const std::string &name, long long iniBalance = 0);
+        bool editWallet(const std::string &id, const std::string &newName, long long newIniBalance);
+        bool deleteWallet(const std::string &id);
+        std::string getWalletName(const std::string &id) const;
 
         //Income Sources
-        const DynamicArray<IncomeSource> &FinanceManager::getIncomeSources() const;
-        const IncomeSource *FinanceManager::findIncomeSource(const std::string &id) const;
-        bool FinanceManager::addIncomeSource(const std::string &id, const std::string &name);
-        bool FinanceManager::editIncomeSource(const std::string &id, const std::string &newName);
-        bool FinanceManager::deleteIncomeSource(const std::string &id);
-        std::string FinanceManager::getIncomeSourceName(const std::string &id) const;
+        const DynamicArray<IncomeSource> &getIncomeSources() const;
+        const IncomeSource *findIncomeSource(const std::string &id) const;
+        bool addIncomeSource(const std::string &id, const std::string &name);
+        bool editIncomeSource(const std::string &id, const std::string &newName);
+        bool deleteIncomeSource(const std::string &id);
+        std::string getIncomeSourceName(const std::string &id) const;
 
         // Expense Categories
-        const DynamicArray<ExpenseCategory> &FinanceManager::getExpenseCategories() const;
-        const ExpenseCategory *FinanceManager::findExpenseCategory(const std::string &id) const;
-        bool FinanceManager::addExpenseCategory(const std::string &id, const std::string &name);
-        bool FinanceManager::editExpenseCategory(const std::string &id, const std::string &newName);
-        bool FinanceManager::deleteExpenseCategory(const std::string &id);
-        std::string FinanceManager::getExpenseCategoryName(const std::string &id) const;
+        const DynamicArray<ExpenseCategory> &getExpenseCategories() const;
+        const ExpenseCategory *findExpenseCategory(const std::string &id) const;
+        bool addExpenseCategory(const std::string &id, const std::string &name);
+        bool editExpenseCategory(const std::string &id, const std::string &newName);
+        bool deleteExpenseCategory(const std::string &id);
+        std::string getExpenseCategoryName(const std::string &id) const;
 
-        // Incomes
-        const DynamicArray<Income> &FinanceManager::getIncomes() const;
-        bool FinanceManager::addIncome(const Date &date, const std::string &sourceId, long long amount, const std::string &walletId, const std::string &description, const std::string &customId);
-        bool FinanceManager::deleteIncome(const std::string &id);
+        // Incomes  
+        const DynamicArray<Income> &getIncomes() const;
+        bool addIncome(const Date &date, const std::string &sourceId, long long amount, const std::string &walletId, const std::string &description, const std::string &customId = "");
+        bool deleteIncome(const std::string &id);
 
         // Expenses
-        const DynamicArray<Expense> &FinanceManager::getExpenses() const;
-        bool FinanceManager::addExpense(const Date &date, const std::string &categoryId, long long amount, const std::string &walletId, const std::string &description, const std::string &customId);
-        bool FinanceManager::deleteExpense(const std::string &id);
+        const DynamicArray<Expense> &getExpenses() const;
+        bool addExpense(const Date &date, const std::string &categoryId, long long amount, const std::string &walletId, const std::string &description, const std::string &customId = "");
+        bool deleteExpense(const std::string &id);
+
+        // Recurring Management
+        const DynamicArray<RecurringTransaction> &getRecurringTransactions() const;
+        bool addRecurringTransaction(RecurringType type, const std::string &sourceId, long long amount, 
+                                             const std::string &walletId, const std::string &description, const Date &startDate,
+                                             bool hasEndDate, const Date &endDate, int dayOfMonth);
+        bool deleteRecurringTransaction(const std::string &id);
+        int checkAndProcessRecurring(const Date &curDate);
 };
 
 
