@@ -92,6 +92,10 @@ class FinanceManager {
                                              bool hasEndDate, const Date &endDate, int dayOfMonth);
         bool deleteRecurringTransaction(const std::string &id);
         int checkAndProcessRecurring(const Date &curDate);
+
+        // Balance Calculations
+        long long getWalletBalance(const std::string &walletId) const;
+        long long getTotalBalance() const;
 };
 
 
