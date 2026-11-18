@@ -24,9 +24,9 @@ void Menu::clearScreen() const {
 
 void Menu::showHeader() const {
     std::cout << Color::CYAN << Color::BOLD;
-    std::cout << "  ┌────────────────────────────────────────┐\n";
-    std::cout << "  │     PERSONAL FINANCE MANAGEMENT        |\n";
-    std::cout << "  └────────────────────────────────────────┘\n";
+    std::cout << "  ------------------------------------------\n";
+    std::cout << "  |     PERSONAL FINANCE MANAGEMENT        |\n";
+    std::cout << "  ------------------------------------------\n";
     std::cout << Color::RESET;
     return;
 }
@@ -93,6 +93,8 @@ void Menu::run() {
     }
     return;
 }
+
+
 
 
 
