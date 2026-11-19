@@ -144,3 +144,5 @@ std::string FinanceManager::getExpenseCategoryName(const std::string &id) const 
     const ExpenseCategory *ptr = findExpenseCategory(id);
     return ptr? ptr->getName() : ("Unknown (" + id + ")");
 }
+
+
