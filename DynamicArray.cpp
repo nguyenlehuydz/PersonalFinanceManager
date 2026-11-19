@@ -2,15 +2,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void init(DynamicArray &da, int cap) {
+void init(DynamicArray &da, int cap){
     da.cap = cap;
     da.cnt = 0;
     da.a = new Account[da.cap];
 }
 
-void resize(DynamicArray &da, int newCap) {
+void resize(DynamicArray &da, int newCap){
     Account* tmp = new Account[newCap];
-    for (int i = 0; i < da.cnt; i++) {
+    for (int i = 0; i < da.cnt; i++){
         tmp[i] = da.a[i];
     }
     delete[] da.a;
@@ -18,33 +18,33 @@ void resize(DynamicArray &da, int newCap) {
     da.cap = newCap;
 }
 
-void push(DynamicArray &da, Account x) {
-    if (da.cnt == da.cap) {
+void push(DynamicArray &da, Account x){
+    if (da.cnt == da.cap){
         resize(da, da.cap * 2);
     }
     da.a[da.cnt++] = x;
 }
 
-void remove(DynamicArray &da, int idx) {
-    if (idx < 0 || idx >= da.cnt) {
+void remove(DynamicArray &da, int idx){
+    if (idx < 0 || idx >= da.cnt){
         cout << "Vị trí không hợp lệ!\n";
         return;
     }
-    for (int i = idx; i < da.cnt - 1; i++) {
+    for (int i = idx; i < da.cnt - 1; i++){
         da.a[i] = da.a[i + 1];
     }
     da.cnt--;
 }
 
-Account get(DynamicArray &da, int idx) {
-    if (idx < 0 || idx >= da.cnt) {
+Account get(DynamicArray &da, int idx){
+    if (idx < 0 || idx >= da.cnt){
         cout << "Vị trí không hợp lệ!\n";
         return Account{};
     }
     return da.a[idx];
 }
 
-void input(DynamicArray &da) {
+void input(DynamicArray &da){
     Account x;
     cout << "Tên: ";
     getline(cin >> ws, x.name);
@@ -59,7 +59,7 @@ void input(DynamicArray &da) {
     push(da, x);
 }
 
-void del(DynamicArray &da) {
+void del(DynamicArray &da){
     delete[] da.a;
     da.a = nullptr;
     da.cnt = 0;
