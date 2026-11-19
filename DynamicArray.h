@@ -1,10 +1,10 @@
-#ifndef DynamicArray_H
-#define DynamicArray_H
+#ifndef DynamicArray_h
+#define DynamicArray_h
 
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Account {
+struct Account{
     string name;
     int bd, bm, by;
     int rd, rm, ry;
@@ -12,7 +12,7 @@ struct Account {
     string stk;
 };
 
-struct DynamicArray {
+struct DynamicArray{
     Account* a;
     int cnt;
     int cap;
