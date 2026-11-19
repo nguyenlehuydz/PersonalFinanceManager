@@ -103,6 +103,7 @@ class FinanceManager {
                                                 long long &totalInc, long long &totalEx, long long &netBal);
         DynamicArray<YearSummary> getAnnualOverview(const DynamicArray<int> &years) const;
         DynamicArray<SourceSummary> getIncomeBreakdown(const DynamicArray<int> &years, long long &totalInc);
+        DynamicArray<CategorySummary> getExpenseBreakdown(const DynamicArray<int> &years, long long &totalExp)
 };
 
 

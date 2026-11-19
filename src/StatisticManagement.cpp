@@ -100,7 +100,7 @@ DynamicArray<SourceSummary> FinanceManager::getIncomeBreakdown(const DynamicArra
         for (int j = 0; j < incomes.size(); j++) {
             if (incomes[j].getSourceId() == incomeSources[i].getId()) {
                 for (int t = 0; t < years.size(); t++) {
-                    if (years[t] == incomes[j].getDate().year()) {
+                    if (years[t] == incomes[j].getDate().year) {
                         ans.totalAmount += incomes[j].getAmount();
                         break;
                     }
@@ -108,6 +108,31 @@ DynamicArray<SourceSummary> FinanceManager::getIncomeBreakdown(const DynamicArra
             }
         }
         totalInc += ans.totalAmount;
+        res.push(ans);
+    }
+    return res;
+}
+
+DynamicArray<CategorySummary> FinanceManager::getExpenseBreakdown(const DynamicArray<int> &years, long long &totalExp) {
+    totalExp = 0;
+    DynamicArray<CategorySummary> res;
+    for (int i = 0; i < expenseCategories.size(); i++) {
+        CategorySummary ans;
+        ans.categoryID = expenseCategories[i].getId();
+        ans.categoryName = expenseCategories[i].getName();
+        ans.totalAmount = 0;
+
+        for (int j = 0; j < expenses.size(); j++) {
+            if (expenses[j].getCategoryId() == ans.categoryID) {
+                for (int t = 0; t < years.size(); t++) {
+                    if (years[t] == expenses[j].getDate().year) {
+                        ans.totalAmount += expenses[j].getAmount();
+                        break;
+                    }
+                }
+            }
+        }
+        totalExp += ans.totalAmount;
         res.push(ans);
     }
     return res;
