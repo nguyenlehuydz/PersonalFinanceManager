@@ -1,6 +1,7 @@
 #ifndef DATE_H
 #define DATE_H
 #include<string>
+#include <iosfwd>
 
 class Date{
 private:
@@ -31,6 +32,7 @@ public:
     bool operator>(const Date& other) const;
     bool operator>=(const Date& other) const;
     int DateofMonth(int month, int year);
+    friend std::ostream& operator<<(std::ostream& os, const Date& date);
 };
 
 #endif
