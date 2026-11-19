@@ -110,3 +110,7 @@ int Date::DateofMonth(int month, int year){
     return 30;
 }
 
+std::ostream& operator<<(std::ostream& os, const Date& date) {
+    os << date.toString();
+    return os;
+}
