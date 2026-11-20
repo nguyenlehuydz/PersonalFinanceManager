@@ -52,6 +52,7 @@ Date::Date(int y, int m, int d) {
 int Date::getYear() const { return year; }
 int Date::getMonth() const { return month; }
 int Date::getDay() const { return day; }
+Date Date::getDate() const {return *this;}
 
 std::string Date::toString() const {
     std::stringstream ss;
