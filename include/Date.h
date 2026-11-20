@@ -9,7 +9,7 @@ private:
     int month;
     int day;
 
-    bool isLeapYear(int y) const;
+    static bool isLeapYear(int y) const;
     bool isValidDate(int y, int m, int d) const;
 
 public:
@@ -32,7 +32,7 @@ public:
     bool operator<=(const Date& other) const;
     bool operator>(const Date& other) const;
     bool operator>=(const Date& other) const;
-    int DateofMonth(int month, int year);
+    static int DateofMonth(int month, int year);
     friend std::ostream& operator<<(std::ostream& os, const Date& date);
 };
 
