@@ -9,7 +9,7 @@ private:
     int month;
     int day;
 
-    static bool isLeapYear(int y) const;
+    static bool isLeapYear(int y);
     bool isValidDate(int y, int m, int d) const;
 
 public:
