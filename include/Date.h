@@ -21,6 +21,7 @@ public:
     int getYear() const;
     int getMonth() const;
     int getDay() const;
+    Date getDate() const;
 
     std::string toString() const;
     static Date fromString(const std::string& dateStr); // Load Date object from a string format
