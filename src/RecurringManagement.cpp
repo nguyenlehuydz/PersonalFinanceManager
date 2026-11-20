@@ -52,7 +52,7 @@ int FinanceManager::checkAndProcessRecurring(const Date &curDate) {
 
         int year = rec.getStartDate().year, month = rec.getStartDate().month;
         while (year < endYear || (year == endYear && month <= endMonth)) {
-            int maxDays = Date::daysInMonth(year, month);
+            int maxDays = Date::DateofMonth(year, month);
             int day = (maxDays < rec.getDayOfMonth()) ? maxDays : rec.getDayOfMonth();
             Date transDate(year, month, day);
 
