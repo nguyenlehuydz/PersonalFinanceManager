@@ -11,8 +11,8 @@ long long FinanceManager::getWalletBalance(const std::string &walletId) const {
         }
     }
     for (int i = 0; i < expenses.size(); i++) {
-        if (expenses[i].getWallet() == walletId) {
-            balance += expenses[i].getAmount();
+        if (expenses[i].getWalletId() == walletId) {
+            balance -= expenses[i].getAmount();
         }
     }
     return balance;
@@ -27,7 +27,7 @@ long long FinanceManager::getTotalBalance() const {
 }
 
 // Statistics
-void FinanceManager::getTimeStatistic(const Date &start, const Date &end, long long &totalInc, long long totalEx, long long &netBal) {
+void FinanceManager::getTimeStatistic(const Date &start, const Date &end, long long &totalInc, long long &totalEx, long long &netBal) const {
     totalInc = totalEx = 0;
     for (int i = 0; i < incomes.size(); i++) {
         if (incomes[i].getDate() >= start && incomes[i].getDate() <= end) {
@@ -43,7 +43,7 @@ void FinanceManager::getTimeStatistic(const Date &start, const Date &end, long l
 }
 
 void FinanceManager::getTimeAndWalletStatistics(const Date &start, const Date &end, const std::string &walletId, 
-                                                long long &totalInc, long long &totalEx, long long &netBal) {
+                                                long long &totalInc, long long &totalEx, long long &netBal) const {
     totalInc = totalEx = 0;
     for (int i = 0; i < incomes.size(); i++) {
         if (incomes[i].getWalletId() == walletId) {
@@ -88,7 +88,7 @@ DynamicArray<YearSummary> FinanceManager::getAnnualOverview(const DynamicArray<i
     return result;
 }
 
-DynamicArray<SourceSummary> FinanceManager::getIncomeBreakdown(const DynamicArray<int> &years, long long &totalInc) {
+DynamicArray<SourceSummary> FinanceManager::getIncomeBreakdown(const DynamicArray<int> &years, long long &totalInc) const {
     totalInc = 0;
     DynamicArray<SourceSummary> res;
     for (int i = 0; i < incomeSources.size(); i++) {
@@ -113,7 +113,7 @@ DynamicArray<SourceSummary> FinanceManager::getIncomeBreakdown(const DynamicArra
     return res;
 }
 
-DynamicArray<CategorySummary> FinanceManager::getExpenseBreakdown(const DynamicArray<int> &years, long long &totalExp) {
+DynamicArray<CategorySummary> FinanceManager::getExpenseBreakdown(const DynamicArray<int> &years, long long &totalExp) const {
     totalExp = 0;
     DynamicArray<CategorySummary> res;
     for (int i = 0; i < expenseCategories.size(); i++) {
@@ -136,4 +136,34 @@ DynamicArray<CategorySummary> FinanceManager::getExpenseBreakdown(const DynamicA
         res.push(ans);
     }
     return res;
+}
+
+DynamicArray<int> FinanceManager::getYears() const {
+    DynamicArray<int> years;
+
+    for (int i = 0; i < incomes.size(); i++) {
+        bool check = true;
+        int y = incomes[i].getDate().year;
+        for (int j = 0; j < years.size(); j++) {
+            if (years[j] == y) {
+                check = false;
+                break;
+            }
+        }
+        if (check) years.push(y);
+    }
+
+    for (int i = 0; i < expenses.size(); i++) {
+        bool check = true;
+        int y = expenses[i].getDate().year;
+        for (int j = 0; j < years.size(); j++) {
+            if (years[j] == y) {
+                check = false;
+                break;
+            }
+        }
+        if (check) years.push(y);
+    }
+
+    return years;
 }
