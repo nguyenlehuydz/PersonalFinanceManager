@@ -31,35 +31,29 @@ bool FinanceManager::deleteRecurringTransaction(const std::string &id) {
 
 int FinanceManager::checkAndProcessRecurring(const Date &curDate) {
     int cnt = 0;
-    auto isBefore = [](const Date &a, const Date &b) {
-        if (a.year < b.year) return true;
-        else if (a.year == b.year && a.month < b.month) return true;
-        else if (a.year == b.year && a.month == b.month && a.day < b.day) return true;
-        else return false; 
-    };
     
     for (int i = 0; i < recur.size(); i++) {
         const RecurringTransaction &rec = recur[i];
-        int endYear = curDate.year;
-        int endMonth = curDate.month;
+        int endYear = curDate.getYear();
+        int endMonth = curDate.getMonth();
 
         if (rec.hasEndDate()) {
-            if (rec.getEndDate().year < endYear || (rec.getEndDate().year == endYear && rec.getEndDate().month < endMonth)) {
-                endYear = rec.getEndDate().year;
-                endMonth = rec.getEndDate().month;
+            if (rec.getEndDate().getYear() < endYear || (rec.getEndDate().getYear() == endYear && rec.getEndDate().getMonth() < endMonth)) {
+                endYear = rec.getEndDate().getYear();
+                endMonth = rec.getEndDate().getMonth();
             }
         }
 
-        int year = rec.getStartDate().year, month = rec.getStartDate().month;
+        int year = rec.getStartDate().getYear(), month = rec.getStartDate().getMonth();
         while (year < endYear || (year == endYear && month <= endMonth)) {
-            int maxDays = Date::DateofMonth(year, month);
+            int maxDays = Date::DateofMonth(month, year);
             int day = (maxDays < rec.getDayOfMonth()) ? maxDays : rec.getDayOfMonth();
             Date transDate(year, month, day);
 
             bool isOutRange = false;
-            isOutRange |= isBefore(transDate, rec.getStartDate());
-            isOutRange |= isBefore(curDate, transDate);
-            isOutRange |= (rec.hasEndDate() && isBefore(rec.getEndDate(), transDate));
+            isOutRange |= (transDate < rec.getStartDate());
+            isOutRange |= (curDate < transDate);
+            isOutRange |= (rec.hasEndDate() && (rec.getEndDate() < transDate));
 
             if (!isOutRange) {
                 std::ostringstream oss;

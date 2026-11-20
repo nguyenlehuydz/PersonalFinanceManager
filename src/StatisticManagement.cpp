@@ -71,13 +71,13 @@ DynamicArray<YearSummary> FinanceManager::getAnnualOverview(const DynamicArray<i
         ans.totalIncome = ans.totalExpense = ans.netBalance = 0;
 
         for (int j = 0; j < incomes.size(); j++) {
-            if (incomes[j].getDate().year == year) {
+            if (incomes[j].getDate().getYear() == year) {
                 ans.totalIncome += incomes[j].getAmount();
             }
         }
 
         for (int j = 0; j < expenses.size(); j++) {
-            if (expenses[j].getDate().year == year) {
+            if (expenses[j].getDate().getYear() == year) {
                 ans.totalExpense += expenses[j].getAmount();
             }
         }
@@ -100,7 +100,7 @@ DynamicArray<SourceSummary> FinanceManager::getIncomeBreakdown(const DynamicArra
         for (int j = 0; j < incomes.size(); j++) {
             if (incomes[j].getSourceId() == incomeSources[i].getId()) {
                 for (int t = 0; t < years.size(); t++) {
-                    if (years[t] == incomes[j].getDate().year) {
+                    if (years[t] == incomes[j].getDate().getYear()) {
                         ans.totalAmount += incomes[j].getAmount();
                         break;
                     }
@@ -125,7 +125,7 @@ DynamicArray<CategorySummary> FinanceManager::getExpenseBreakdown(const DynamicA
         for (int j = 0; j < expenses.size(); j++) {
             if (expenses[j].getCategoryId() == ans.categoryID) {
                 for (int t = 0; t < years.size(); t++) {
-                    if (years[t] == expenses[j].getDate().year) {
+                    if (years[t] == expenses[j].getDate().getYear()) {
                         ans.totalAmount += expenses[j].getAmount();
                         break;
                     }
@@ -143,7 +143,7 @@ DynamicArray<int> FinanceManager::getYears() const {
 
     for (int i = 0; i < incomes.size(); i++) {
         bool check = true;
-        int y = incomes[i].getDate().year;
+        int y = incomes[i].getDate().getYear();
         for (int j = 0; j < years.size(); j++) {
             if (years[j] == y) {
                 check = false;
@@ -155,7 +155,7 @@ DynamicArray<int> FinanceManager::getYears() const {
 
     for (int i = 0; i < expenses.size(); i++) {
         bool check = true;
-        int y = expenses[i].getDate().year;
+        int y = expenses[i].getDate().getYear();
         for (int j = 0; j < years.size(); j++) {
             if (years[j] == y) {
                 check = false;
