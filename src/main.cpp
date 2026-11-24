@@ -19,5 +19,8 @@ int main() {
                   << (today.month < 10? "0" : "") << today.month << "/" << today.year << ")";
     }
 
+    Menu ui(manager);
+    ui.run();
+    
     return 0;
 }
