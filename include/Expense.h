@@ -5,7 +5,7 @@
 class Expense : public Transaction
 {
 private:
-    std::string sourceId;
+    std::string categoryId;
 public:
     Expense();
     Expense(
@@ -14,7 +14,7 @@ public:
         double amount,
         const std::string& walletId,
         const std::string& description);
-    const std::string& getsourceId() const;
+    const std::string& getCategoryId() const;
     void display() const override;
 };
 #endif
