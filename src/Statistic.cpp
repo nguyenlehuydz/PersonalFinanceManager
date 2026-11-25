@@ -1,67 +1,53 @@
 #include "../include/Statistic.h"
 #include "../include/Income.h"
 #include "../include/Expense.h"
-using namespace std;
 #include <iostream>
-
 Statistic::Statistic()
-{
-}
-
+{}
 Statistic::Statistic(
-    const vector<Transaction*>& transactions)
-{
-    this->transactions = transactions;
-}
-
+    const std::vector<const Transaction*>& transactions)
+    : transactions(transactions)
+{}
 double Statistic::getTotalIncome() const
 {
-    double total = 0;
-
-    for(auto t : transactions)
+    double total = 0.0;
+    for (const Transaction* transaction : transactions)
     {
-        if(dynamic_cast<Income*>(t))
+        if (dynamic_cast<const Income*>(transaction) != nullptr)
         {
-            total += t->getAmount();
+            total += transaction->getAmount();
         }
     }
-
     return total;
 }
-
 double Statistic::getTotalExpense() const
 {
-    double total = 0;
+    double total = 0.0;
 
-    for(auto t : transactions)
+    for (const Transaction* transaction : transactions)
     {
-        if(dynamic_cast<Expense*>(t))
+        if (dynamic_cast<const Expense*>(transaction) != nullptr)
         {
-            total += t->getAmount();
+            total += transaction->getAmount();
         }
     }
-
     return total;
 }
-
 double Statistic::getBalance() const
 {
     return getTotalIncome() - getTotalExpense();
 }
-
 void Statistic::displayReport() const
 {
-    cout << "\n===== STATISTIC REPORT =====\n";
-
-    cout << "Total Income : "
-              << getTotalIncome()
-              << "\n";
-
-    cout << "Total Expense : "
-              << getTotalExpense()
-              << "\n";
-
-    cout << "Balance : "
-              << getBalance()
-              << "\n";
+    std::cout
+        << "\n===== STATISTIC REPORT =====\n"
+        << "Total Income  : "
+        << getTotalIncome()
+        << '\n'
+        << "Total Expense : "
+        << getTotalExpense()
+        << '\n'
+        << "Balance       : "
+        << getBalance()
+        << '\n';
 }
