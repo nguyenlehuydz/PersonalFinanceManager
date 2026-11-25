@@ -21,6 +21,10 @@ const std::string& Expense::getCategoryId() const
 {
     return categoryId;
 }
+void Expense::setCategoryId(const std::string& categoryId)
+{
+    this->categoryId = categoryId;
+}
 void Expense::display() const
 {
     std::cout
