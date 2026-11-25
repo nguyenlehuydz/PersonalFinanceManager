@@ -1,36 +1,32 @@
 #include "../include/Wallet.h"
 #include <iostream>
-using namespace std;
-Wallet :: Wallet()
+Wallet::Wallet()
+    : id(""),
+      name("")
+{}
+Wallet::Wallet(
+    const std::string& id,
+    const std::string& name)
+    : id(id),
+      name(name)
+{}
+void Wallet::setId(const std::string& id)
 {
-    WalletId = "";
-    WalletName = "";
+    this->id = id;
 }
-Wallet :: Wallet( string id , string name)
+void Wallet::setName(const std::string& name)
 {
-    WalletId = id;
-    WalletName = name;
+    this->name = name;
 }
-void Wallet::setId(string id)
+const std::string& Wallet::getId() const
 {
-    WalletId = id;
+    return id;
 }
-void Wallet::setName(string name)
+const std::string& Wallet::getName() const
 {
-    WalletName = name;
-}
-string Wallet::getId() const
-{
-    return WalletId;
-}
-string Wallet::getName() const
-{
-    return WalletName;
+    return name;
 }
 void Wallet::display() const
 {
-    cout << WalletId
-         << "-"
-         << WalletName
-         << endl;
+    std::cout << id << " - " << name << '\n';
 }
