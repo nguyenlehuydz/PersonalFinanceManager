@@ -17,6 +17,7 @@ public:
         const std::string& walletId,
         const std::string& description);
     virtual ~Transaction() = default;
+    const Date& getDate() const;
     double getAmount() const;
     const std::string& getWalletId() const;
     const std::string& getDescription() const;
