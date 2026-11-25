@@ -1,36 +1,38 @@
 #include "../include/RecurringTransaction.h"
 #include <iostream>
-using namespace std;
-RecurringTransaction :: RecurringTransaction()
-{
-    amount = 0;
-    hasEndDate = false;
-}
-RecurringTransaction :: RecurringTransaction(
+RecurringTransaction::RecurringTransaction()
+    : type(INCOMETYPE),
+      startDate(),
+      endDate(),
+      hasEndDate(false),
+      sourceOrCategoryId(""),
+      walletId(""),
+      amount(0.0),
+      description("")
+{}
+RecurringTransaction::RecurringTransaction(
     TransactionType type,
-    Date startDate,
-    Date endDate,
-    
+    const Date& startDate,
+    const Date& endDate,
     bool hasEndDate,
-    
-    string SourceOrCategoryId,
-    string WalletId,
-
+    const std::string& sourceOrCategoryId,
+    const std::string& walletId,
     double amount,
-    string decription
-)
-{
-    this-> type = type;
-    this-> startDate = startDate;
-    this-> endDate = endDate;
-    this-> hasEndDate = hasEndDate;
-    this-> SourceOrCategoryId = SourceOrCategoryId;
-    this-> WalletId = WalletId;
-    this-> amount = amount;
-    this-> decription = decription;
-}
+    const std::string& description)
+    : type(type),
+      startDate(startDate),
+      endDate(endDate),
+      hasEndDate(hasEndDate),
+      sourceOrCategoryId(sourceOrCategoryId),
+      walletId(walletId),
+      amount(amount),
+      description(description)
+{}
 void RecurringTransaction::display() const
 {
-    cout << "Recurring Transaction\n"
-         << "Amount:" << amount << endl;
+    std::cout
+        << "Recurring Transaction\n"
+        << "Wallet Id: " << walletId << '\n'
+        << "Amount: " << amount << '\n'
+        << "Description: " << description << '\n';
 }
