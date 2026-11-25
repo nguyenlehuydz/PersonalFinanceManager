@@ -1,27 +1,32 @@
 #include "../include/Income.h"
 #include <iostream>
-using namespace std;
-Income :: Income()
-{
-    sourceId = "";
-}
-Income :: Income(
-    Date date,
-    string sourceId,
+Income::Income()
+    : Transaction(),
+      sourceId("")
+{}
+Income::Income(
+    const Date& date,
+    const std::string& sourceId,
     double amount,
-    string WalletId,
-    string decription
-)
-    : Transaction(date , amount , WalletId, decription)
-{
-    this-> sourceId = sourceId;
-}
-string Income::getSourceId() const
+    const std::string& walletId,
+    const std::string& description)
+    : Transaction(
+          date,
+          amount,
+          walletId,
+          description),
+      sourceId(sourceId)
+{}
+const std::string& Income::getSourceId() const
 {
     return sourceId;
 }
 void Income::display() const
 {
-    cout << "Income\n"
-         << "Amount:" << amount << endl;
+    std::cout
+        << "Income\n"
+        << "Source Id: " << sourceId << '\n'
+        << "Wallet Id: " << walletId << '\n'
+        << "Amount: " << amount << '\n'
+        << "Description: " << description << '\n';
 }
