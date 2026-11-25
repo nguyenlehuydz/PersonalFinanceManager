@@ -5,10 +5,11 @@
 class Statistic
 {
 private:
-    std::vector<Transaction*> transactions;
+    std::vector<const Transaction*> transactions;
 public:
     Statistic();
-    Statistic(const std::vector<Transaction*>& transactions);
+    Statistic(
+        const std::vector<const Transaction*>& transactions);
     double getTotalIncome() const;
     double getTotalExpense() const;
     double getBalance() const;
