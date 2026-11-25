@@ -9,13 +9,13 @@ private:
 public:
     Income();
     Income(
+        const std::string& id,
         const Date& date,
         const std::string& sourceId,
-        double amount,
+        long long amount,
         const std::string& walletId,
         const std::string& description);
     const std::string& getSourceId() const;
     void setSourceId(const std::string& sourceId);
-    void display() const override;
 };
 #endif
