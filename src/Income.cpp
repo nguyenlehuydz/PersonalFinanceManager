@@ -10,16 +10,16 @@ Income::Income(
     double amount,
     const std::string& walletId,
     const std::string& description)
-    : Transaction(
-          date,
-          amount,
-          walletId,
-          description),
+    : Transaction(date, amount, walletId, description),
       sourceId(sourceId)
 {}
 const std::string& Income::getSourceId() const
 {
     return sourceId;
+}
+void Income::setSourceId(const std::string& sourceId)
+{
+    this->sourceId = sourceId;
 }
 void Income::display() const
 {
