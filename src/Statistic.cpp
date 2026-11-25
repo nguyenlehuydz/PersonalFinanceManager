@@ -39,15 +39,12 @@ double Statistic::getBalance() const
 }
 void Statistic::displayReport() const
 {
+    double totalIncome = getTotalIncome();
+    double totalExpense = getTotalExpense();
+    double balance = totalIncome - totalExpense;
     std::cout
         << "\n===== STATISTIC REPORT =====\n"
-        << "Total Income  : "
-        << getTotalIncome()
-        << '\n'
-        << "Total Expense : "
-        << getTotalExpense()
-        << '\n'
-        << "Balance       : "
-        << getBalance()
-        << '\n';
+        << "Total Income  : " << totalIncome << '\n'
+        << "Total Expense : " << totalExpense << '\n'
+        << "Balance       : " << balance << '\n';
 }
