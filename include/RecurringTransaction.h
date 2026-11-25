@@ -2,42 +2,56 @@
 #define RECURRING_TRANSACTION_H
 #include <string>
 #include "Date.h"
-enum TransactionType
+enum class RecurringType
 {
-    INCOMETYPE,
-    EXPENSETYPE
+    INCOME,
+    EXPENSE
 };
 class RecurringTransaction
 {
 private:
-    TransactionType type;
-    Date startDate;
-    Date endDate;
-    bool hasEndDate;
+    std::string id;
+    RecurringType type;
     std::string sourceOrCategoryId;
+    long long amount;
     std::string walletId;
-    double amount;
     std::string description;
+    Date startDate;
+    bool hasEndDateFlag;
+    Date endDate;
+    int dayOfMonth;
 public:
     RecurringTransaction();
     RecurringTransaction(
-        TransactionType type,
-        const Date& startDate,
-        const Date& endDate,
-        bool hasEndDate,
+        const std::string& id,
+        RecurringType type,
         const std::string& sourceOrCategoryId,
+        long long amount,
         const std::string& walletId,
-        double amount,
-        const std::string& description);
-
-    TransactionType getType() const;
-    const Date& getStartDate() const;
-    const Date& getEndDate() const;
-    bool getHasEndDate() const;
+        const std::string& description,
+        const Date& startDate,
+        bool hasEndDate = false,
+        const Date& endDate = Date(),
+        int dayOfMonth = 1);
+    const std::string& getId() const;
+    void setId(const std::string& id);
+    RecurringType getType() const;
+    void setType(RecurringType type);
     const std::string& getSourceOrCategoryId() const;
+    void setSourceOrCategoryId(const std::string& sourceOrCategoryId);
+    long long getAmount() const;
+    void setAmount(long long amount);
     const std::string& getWalletId() const;
-    double getAmount() const;
+    void setWalletId(const std::string& walletId);
     const std::string& getDescription() const;
-    void display() const;
+    void setDescription(const std::string& description);
+    const Date& getStartDate() const;
+    void setStartDate(const Date& startDate);
+    bool hasEndDate() const;
+    void setHasEndDate(bool hasEndDate);
+    const Date& getEndDate() const;
+    void setEndDate(const Date& endDate);
+    int getDayOfMonth() const;
+    void setDayOfMonth(int dayOfMonth);
 };
 #endif
