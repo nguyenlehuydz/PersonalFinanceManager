@@ -9,13 +9,13 @@ private:
 public:
     Expense();
     Expense(
+        const std::string& id,
         const Date& date,
         const std::string& categoryId,
-        double amount,
+        long long amount,
         const std::string& walletId,
         const std::string& description);
     const std::string& getCategoryId() const;
     void setCategoryId(const std::string& categoryId);
-    void display() const override;
 };
 #endif
