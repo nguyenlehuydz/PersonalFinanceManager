@@ -42,7 +42,7 @@ void Menu::showDashboard()const {
     std::cout << "  --------------------------------------------------\n";
     std::cout << Color::YELLOW << "  NAVIGATION MENU:\n" << Color::RESET;
     std::cout << "  " << Color::GREEN << "[1]" << Color::RESET << " Wallet Management\n";
-    std::cout << "  " << Color::GREEN << "[2]" << Color::RESET << " Add Transaction\n";
+    std::cout << "  " << Color::GREEN << "[2]" << Color::RESET << " Transaction\n";
     std::cout << "  " << Color::GREEN << "[3]" << Color::RESET << " Recurring Transactions\n";
     std::cout << "  " << Color::GREEN << "[4]" << Color::RESET << " Statistics\n";
     std::cout << "  " << Color::RED << "[0]" << Color::RESET << " Exit Application\n";
@@ -59,7 +59,8 @@ void Menu::handleChoice(int &choice, bool& isRunning) {
             runWalletManager();
             break;
         case 2:
-            std::cout << Color::MAGENTA << "  [INFO] Opening Add Transaction..." << Color::RESET << "\n";
+            std::cout << Color::MAGENTA << "  [INFO] Opening Transaction..." << Color::RESET << "\n";
+            runTransactionManager();
             break;
         case 3:
             std::cout << Color::MAGENTA << "  [INFO] Opening Recurring Transactions..." << Color::RESET << "\n";
@@ -149,6 +150,7 @@ void Menu::showWalletVer2() const {
                     << "\n";
         }
     }
+    std::cout << "  --------------------------------------------------\n";
     return;
 }
 
@@ -158,24 +160,6 @@ void Menu::showHeaderWallet() const {
     std::cout << "  |                 WALLET  MANAGEMENT              |\n";
     std::cout << "  ==================================================\n";
     std::cout << Color::RESET;
-    return;
-}
-
-void Menu::showDashboard()const {
-    showHeader();
-    long long totalBalance = getTotalBalance();
-    std::cout << Color::BOLD << "  TOTAL BALANCE: " << totalBalance << " VND\n" << Color::RESET;
-    std::cout << "  --------------------------------------------------\n";
-    showWallet();
-    std::cout << "  --------------------------------------------------\n";
-    std::cout << Color::YELLOW << "  NAVIGATION MENU:\n" << Color::RESET;
-    std::cout << "  " << Color::GREEN << "[1]" << Color::RESET << " Wallet Management\n";
-    std::cout << "  " << Color::GREEN << "[2]" << Color::RESET << " Add Transaction\n";
-    std::cout << "  " << Color::GREEN << "[3]" << Color::RESET << " Recurring Transactions\n";
-    std::cout << "  " << Color::GREEN << "[4]" << Color::RESET << " Statistics\n";
-    std::cout << "  " << Color::RED << "[0]" << Color::RESET << " Exit Application\n";
-    std::cout << "  --------------------------------------------------\n";
-    std::cout << Color::BOLD << "  Enter your choice: " << Color::RESET;
     return;
 }
 
@@ -206,7 +190,6 @@ void Menu::runWalletManager() {
 void Menu::showWalletDashboard()const {
     showHeaderWallet();
     showWalletVer2();
-    std::cout << "  --------------------------------------------------\n";
     std::cout << "  " << Color::GREEN << "[1]" << Color::RESET << " Add Wallet\n";
     std::cout << "  " << Color::GREEN << "[2]" << Color::RESET << " Edit Wallet\n";
     std::cout << "  " << Color::GREEN << "[3]" << Color::RESET << " Delete Wallet\n";
@@ -277,3 +260,257 @@ void readWalletLine(const std::string& line, std::string& id, std::string& name,
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void Menu::showIncomeTransaction() const {
+    std::cout << Color::BOLD << "  INCOME TRANSACTION:\n" << Color::RESET;
+    if (Income.size() == 0) {
+        std::cout << "    (No transaction is added)\n";
+    }
+    else{
+        std::cout << "    "
+                  << std::left  << std::setw(6)  << "STT"
+                  << std::left  << std::setw(12) << "Date"
+                  << std::left  << std::setw(8)  << "ID"
+                  << std::left  << std::setw(26) << "Name"
+                  << std::left  << std::setw(10) << "Wallet"
+                  << std::right << std::setw(12) << "Amount"
+                  << "\n";
+        std::cout << "    ------------------------------------------\n";
+        for(int i=0;i<Income.size();i++){
+            const auto& t = Income[i];  
+            std::cout << "    " 
+                      << std::left  << std::setw(6)  << ("[" + std::to_string(i + 1) + "]")
+                      << std::left  << std::setw(12) << t.date
+                      << std::left  << std::setw(8)  << t.sourceId
+                      << std::left  << std::setw(26) << t.description
+                      << std::left  << std::setw(10) << t.walletid
+                      << std::right << std::setw(12) << t.amount
+                      << "\n";
+        }
+    }
+    return;
+}
+
+void Menu::showExpenseTransaction() const {
+    std::cout << Color::BOLD << "  EXPENSE TRANSACTION:\n" << Color::RESET;
+    if (Expense.size() == 0) {
+        std::cout << "    (No transaction is added)\n";
+    }
+    else{
+        std::cout << "    "
+                  << std::left  << std::setw(6)  << "STT"
+                  << std::left  << std::setw(12) << "Date"
+                  << std::left  << std::setw(8)  << "ID"
+                  << std::left  << std::setw(26) << "Name"
+                  << std::left  << std::setw(10) << "Wallet"
+                  << std::right << std::setw(12) << "Amount"
+                  << "\n";
+        std::cout << "    ------------------------------------------\n";
+        for(int i=0;i<Expense.size();i++){
+            const auto& t = Expense[i];  
+            std::cout << "    " 
+                      << std::left  << std::setw(6)  << ("[" + std::to_string(i + 1) + "]")
+                      << std::left  << std::setw(12) << t.date
+                      << std::left  << std::setw(8)  << t.sourceId
+                      << std::left  << std::setw(26) << t.description
+                      << std::left  << std::setw(10) << t.walletid
+                      << std::right << std::setw(12) << t.amount
+                      << "\n";
+        }
+    }
+    return;
+}
+
+void Menu::showHeaderTransaction() const {
+    std::cout << Color::CYAN << Color::BOLD;
+    std::cout << "  ==================================================\n";
+    std::cout << "  |                    TRANSACTION                  |\n";
+    std::cout << "  ==================================================\n";
+    std::cout << Color::RESET;
+    return;
+}
+
+void Menu::showTransactionDashboard()const {
+    showHeaderTransaction();
+    if (txViewMode == 'I') {
+        showIncomeTransaction();
+    } else if (txViewMode == 'E') {
+        showExpenseTransaction();
+    } else {
+        showIncomeTransaction();
+        std::cout << "\n";
+        showExpenseTransaction();
+    }
+    std::cout << "  --------------------------------------------------\n";
+    std::cout << "  " << Color::GREEN << "[1]" << Color::RESET << " Switch View (Income / Expense / All)\n";
+    std::cout << "  " << Color::GREEN << "[2]" << Color::RESET << " Add Transaction\n";
+    std::cout << "  " << Color::GREEN << "[3]" << Color::RESET << " Edit Transaction\n";
+    std::cout << "  " << Color::GREEN << "[4]" << Color::RESET << " Delete Transaction\n";
+    std::cout << "  " << Color::GREEN << "[0]" << Color::RESET << " Back to Dashboard\n";
+    std::cout << "  --------------------------------------------------\n";
+    std::cout << Color::BOLD << "  Enter your choice: " << Color::RESET;
+    return;
+}
+
+void Menu::runTransactionManager() {
+    bool isRunningTransactionManager = true;
+    int choiceTransactionManager{};
+    while (isRunningTransactionManager) {
+        clearScreen();
+        showTransactionDashboard();
+        if (!(std::cin >> choiceTransactionManager)) {
+            std::cout << "\n  " << Color::RED << "[ERROR] Please enter a valid integer!" << Color::RESET << "\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "\n  Press Enter to continue...";
+            std::cin.get();
+            continue;
+        }
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        handleChoiceTransaction(choiceTransactionManager, isRunningTransactionManager);
+        if (isRunningTransactionManager) {
+            std::cout << "\n  Press Enter to continue...";
+            std::cin.get();
+        }
+    }
+    return;
+}
+
+void Menu::handleChoiceTransaction(int &choiceTransactionManager, bool& isRunningTransactionManager) {
+    std::cout << "\n";
+    switch (choiceTransactionManager) {
+        case 1: {
+            std::cout << Color::MAGENTA
+                      << "  [INFO] Choose view mode ([I] Income, [E] Expense, [A] All): "
+                      << Color::RESET;
+            char mode{};
+            std::cin >> mode;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            mode = static_cast<char>(std::toupper(static_cast<unsigned char>(mode)));
+            if (mode == 'I' || mode == 'E' || mode == 'A') {
+                txViewMode = mode;
+                std::cout << Color::GREEN << "  [INFO] Display mode updated!\n" << Color::RESET;
+            } else {
+                std::cout << Color::RED << "  [ERROR] Invalid view mode!\n" << Color::RESET;
+            }
+            break;
+        }
+        case 2: {
+            std::cout << Color::MAGENTA
+                      << "  [INFO] Choose type ([I] Income / [E] Expense): "
+                      << Color::RESET;
+            char type{};
+            std::cin >> type;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            type = static_cast<char>(std::toupper(static_cast<unsigned char>(type)));
+
+            std::cout << Color::MAGENTA
+                      << "  [INFO] Enter: <date> <sourceId> <walletId> <amount> <name>\n"
+                      << Color::RESET << "  ";
+
+            std::string line, date, sourceId, walletId, name;
+            long long amount = 0;
+            std::getline(std::cin, line);
+            readTransactionInputLine(line, date, sourceId, walletId, amount, name);
+
+            bool ok = false;
+            if (type == 'I') {
+                ok = addIncome(date, sourceId, amount, walletId, name); 
+            } else if (type == 'E') {
+                ok = addExpense(date, sourceId, amount, walletId, name);
+            }
+            // Khong biet custom id o dau nghi la gi
+            if (ok) {
+                std::cout << Color::GREEN << "  SAVED!!!\n" << Color::RESET;
+            } else {
+                std::cout << Color::RED << "  [ERROR] Duplicate ID or invalid data!!!\n" << Color::RESET;
+            }
+            break;
+        }
+        case 3: {
+            std::cout << Color::MAGENTA
+                      << "  [INFO] Enter transaction ID to edit: "
+                      << Color::RESET;
+            std::string id;
+            std::getline(std::cin, id);
+
+            std::cout << Color::MAGENTA
+                      << "  [INFO] Enter new: <date> <sourceId> <walletId> <amount> <name>\n"
+                      << Color::RESET << "  ";
+            std::string line, date, sourceId, walletId, name;
+            long long amount = 0;
+            std::getline(std::cin, line);
+            readTransactionInputLine(line, date, sourceId, walletId, amount, name);
+
+            if (editIncome(id, date, sourceId, walletId, amount, name)||editExpense(id, date, sourceId, walletId, amount, name)) {
+                std::cout << Color::GREEN << "  SAVED!!!\n" << Color::RESET;
+            } else {
+                std::cout << Color::RED << "  [ERROR] ID was not found or can not update!!!\n" << Color::RESET;
+            }
+            // tui muon doi tat ca thong tin luon thay vi chi doi dc name nhu trong edit function ong viet
+            break;
+        }
+        case 4: {
+            std::cout << Color::MAGENTA
+                      << "  [INFO] Transaction will be deleted for the entered ID.\n"
+                      << "  [INFO] Pls enter transaction id: "
+                      << Color::RESET;
+            std::string id;
+            std::getline(std::cin, id);
+
+            if (deleteIncomeSource(id)||deleteExpenseCategory(id)) {
+                std::cout << Color::GREEN << "  DELETED / SAVED!!!\n" << Color::RESET;
+            } else {
+                std::cout << Color::RED << "  [ERROR] ID was not found!!!\n" << Color::RESET;
+            }
+            break;
+        }
+        case 0:
+            std::cout << Color::GREEN << "  Return to Dashboard now!!!" << Color::RESET << "\n";
+            isRunningTransactionManager = false;
+            break;
+        default:
+            std::cout << Color::RED << "  [ERROR] Invalid choice! Please select a number from 0 to 4." << Color::RESET << "\n";
+    }
+    return;
+}
+
+static void readTransactionInputLine(const std::string& line, std::string& date, std::string& sourceId, std::string& walletId, double& amount, std::string& name) {
+    std::istringstream iss(line);
+    std::string amtStr, token;
+    date.clear();
+    sourceId.clear();
+    walletId.clear();
+    amount = 0;
+    name.clear();
+
+    iss >> date >> sourceId >> walletId >> amtStr;
+    if (!amtStr.empty()) {
+        amount = std::stoll(amtStr);
+    }
+    while (iss >> token) {
+        if (!name.empty()) name += " ";
+        name += token;
+    }
+}
