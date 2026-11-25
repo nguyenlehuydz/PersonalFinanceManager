@@ -1,27 +1,25 @@
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
-#include "Date.h"
-using namespace std;
 #include <string>
+#include "Date.h"
 class Transaction
 {
-    protected:
+protected:
     Date date;
     double amount;
-    string WalletId;
-    string description;
-    public:
+    std::string walletId;
+    std::string description;
+public:
     Transaction();
-    Transaction
-    (
-        Date date,
+    Transaction(
+        const Date& date,
         double amount,
-        string WalletId,
-        string description
-    );
-    virtual void display() const = 0;
+        const std::string& walletId,
+        const std::string& description);
+    virtual ~Transaction() = default;
     double getAmount() const;
-    string getWalletId() const;
-
+    const std::string& getWalletId() const;
+    const std::string& getDescription() const;
+    virtual void display() const = 0;
 };
 #endif
