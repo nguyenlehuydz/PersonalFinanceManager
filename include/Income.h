@@ -1,24 +1,20 @@
 #ifndef INCOME_H
 #define INCOME_H
-using namespace std;
+#include <string>
 #include "Transaction.h"
 class Income : public Transaction
 {
-    private:
-    string sourceId;
-
+private:
+    std::string sourceId;
 public:
     Income();
-
     Income(
-        Date date,
-        string sourceId,
+        const Date& date,
+        const std::string& sourceId,
         double amount,
-        string walletId,
-        string description
-    );
-
-    string getSourceId() const;
+        const std::string& walletId,
+        const std::string& description);
+    const std::string& getSourceId() const;
 
     void display() const override;
 };
