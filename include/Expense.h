@@ -10,11 +10,12 @@ public:
     Expense();
     Expense(
         const Date& date,
-        const std::string& sourceId,
+        const std::string& categoryId,
         double amount,
         const std::string& walletId,
         const std::string& description);
     const std::string& getCategoryId() const;
+    void setCategoryId(const std::string& categoryId);
     void display() const override;
 };
 #endif
