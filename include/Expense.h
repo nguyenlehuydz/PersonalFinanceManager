@@ -1,23 +1,20 @@
 #ifndef EXPENSE_H
 #define EXPENSE_H
+#include <string>
 #include "Transaction.h"
-using namespace std;
 class Expense : public Transaction
 {
-    private:
-    string sourceId;
-
+private:
+    std::string categoryId;
 public:
     Expense();
     Expense(
-        Date date,
-        string sourceId,
+        const Date& date,
+        const std::string& categoryId,
         double amount,
-        string walletId,
-        string description
-    );
-    string getsourceId() const;
-
+        const std::string& walletId,
+        const std::string& description);
+    const std::string& getCategoryId() const;
     void display() const override;
 };
 #endif
