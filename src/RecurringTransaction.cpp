@@ -5,10 +5,10 @@ RecurringTransaction::RecurringTransaction()
       startDate(),
       endDate(),
       hasEndDate(false),
-      sourceOrCategoryId(""),
-      walletId(""),
+      sourceOrCategoryId(),
+      walletId(),
       amount(0.0),
-      description("")
+      description()
 {}
 RecurringTransaction::RecurringTransaction(
     TransactionType type,
@@ -28,10 +28,44 @@ RecurringTransaction::RecurringTransaction(
       amount(amount),
       description(description)
 {}
+TransactionType RecurringTransaction::getType() const
+{
+    return type;
+}
+const Date& RecurringTransaction::getStartDate() const
+{
+    return startDate;
+}
+const Date& RecurringTransaction::getEndDate() const
+{
+    return endDate;
+}
+bool RecurringTransaction::getHasEndDate() const
+{
+    return hasEndDate;
+}
+const std::string& RecurringTransaction::getSourceOrCategoryId() const
+{
+    return sourceOrCategoryId;
+}
+const std::string& RecurringTransaction::getWalletId() const
+{
+    return walletId;
+}
+double RecurringTransaction::getAmount() const
+{
+    return amount;
+}
+const std::string& RecurringTransaction::getDescription() const
+{
+    return description;
+}
 void RecurringTransaction::display() const
 {
     std::cout
         << "Recurring Transaction\n"
+        << "Type: " << (type == INCOMETYPE ? "Income" : "Expense") << '\n'
+        << "Source/Category Id: " << sourceOrCategoryId << '\n'
         << "Wallet Id: " << walletId << '\n'
         << "Amount: " << amount << '\n'
         << "Description: " << description << '\n';
