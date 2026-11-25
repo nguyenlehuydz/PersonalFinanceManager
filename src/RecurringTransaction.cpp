@@ -1,72 +1,115 @@
 #include "../include/RecurringTransaction.h"
-#include <iostream>
 RecurringTransaction::RecurringTransaction()
-    : type(INCOMETYPE),
+    : id(""),
+      type(RecurringType::INCOME),
+      sourceOrCategoryId(""),
+      amount(0),
+      walletId(""),
+      description(""),
       startDate(),
+      hasEndDateFlag(false),
       endDate(),
-      hasEndDate(false),
-      sourceOrCategoryId(),
-      walletId(),
-      amount(0.0),
-      description()
+      dayOfMonth(1)
 {}
 RecurringTransaction::RecurringTransaction(
-    TransactionType type,
-    const Date& startDate,
-    const Date& endDate,
-    bool hasEndDate,
+    const std::string& id,
+    RecurringType type,
     const std::string& sourceOrCategoryId,
+    long long amount,
     const std::string& walletId,
-    double amount,
-    const std::string& description)
-    : type(type),
-      startDate(startDate),
-      endDate(endDate),
-      hasEndDate(hasEndDate),
+    const std::string& description,
+    const Date& startDate,
+    bool hasEndDate,
+    const Date& endDate,
+    int dayOfMonth)
+    : id(id),
+      type(type),
       sourceOrCategoryId(sourceOrCategoryId),
-      walletId(walletId),
       amount(amount),
-      description(description)
+      walletId(walletId),
+      description(description),
+      startDate(startDate),
+      hasEndDateFlag(hasEndDate),
+      endDate(endDate),
+      dayOfMonth(dayOfMonth)
 {}
-TransactionType RecurringTransaction::getType() const
+const std::string& RecurringTransaction::getId() const
+{
+    return id;
+}
+void RecurringTransaction::setId(const std::string& id)
+{
+    this->id = id;
+}
+RecurringType RecurringTransaction::getType() const
 {
     return type;
 }
-const Date& RecurringTransaction::getStartDate() const
+void RecurringTransaction::setType(RecurringType type)
 {
-    return startDate;
-}
-const Date& RecurringTransaction::getEndDate() const
-{
-    return endDate;
-}
-bool RecurringTransaction::getHasEndDate() const
-{
-    return hasEndDate;
+    this->type = type;
 }
 const std::string& RecurringTransaction::getSourceOrCategoryId() const
 {
     return sourceOrCategoryId;
 }
+void RecurringTransaction::setSourceOrCategoryId(const std::string& sourceOrCategoryId)
+{
+    this->sourceOrCategoryId = sourceOrCategoryId;
+}
+long long RecurringTransaction::getAmount() const
+{
+    return amount;
+}
+void RecurringTransaction::setAmount(long long amount)
+{
+    this->amount = amount;
+}
 const std::string& RecurringTransaction::getWalletId() const
 {
     return walletId;
 }
-double RecurringTransaction::getAmount() const
+void RecurringTransaction::setWalletId(const std::string& walletId)
 {
-    return amount;
+    this->walletId = walletId;
 }
 const std::string& RecurringTransaction::getDescription() const
 {
     return description;
 }
-void RecurringTransaction::display() const
+void RecurringTransaction::setDescription(const std::string& description)
 {
-    std::cout
-        << "Recurring Transaction\n"
-        << "Type: " << (type == INCOMETYPE ? "Income" : "Expense") << '\n'
-        << "Source/Category Id: " << sourceOrCategoryId << '\n'
-        << "Wallet Id: " << walletId << '\n'
-        << "Amount: " << amount << '\n'
-        << "Description: " << description << '\n';
+    this->description = description;
+}
+const Date& RecurringTransaction::getStartDate() const
+{
+    return startDate;
+}
+void RecurringTransaction::setStartDate(const Date& startDate)
+{
+    this->startDate = startDate;
+}
+bool RecurringTransaction::hasEndDate() const
+{
+    return hasEndDateFlag;
+}
+void RecurringTransaction::setHasEndDate(bool hasEndDate)
+{
+    this->hasEndDateFlag = hasEndDate;
+}
+const Date& RecurringTransaction::getEndDate() const
+{
+    return endDate;
+}
+void RecurringTransaction::setEndDate(const Date& endDate)
+{
+    this->endDate = endDate;
+}
+int RecurringTransaction::getDayOfMonth() const
+{
+    return dayOfMonth;
+}
+void RecurringTransaction::setDayOfMonth(int dayOfMonth)
+{
+    this->dayOfMonth = dayOfMonth;
 }
