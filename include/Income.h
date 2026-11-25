@@ -15,7 +15,7 @@ public:
         const std::string& walletId,
         const std::string& description);
     const std::string& getSourceId() const;
-
+    void setSourceId(const std::string& sourceId);
     void display() const override;
 };
 #endif
