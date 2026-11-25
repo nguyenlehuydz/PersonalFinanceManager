@@ -2,8 +2,8 @@
 Transaction::Transaction()
     : date(),
       amount(0.0),
-      walletId(""),
-      description("")
+      walletId(),
+      description()
 {}
 Transaction::Transaction(
     const Date& date,
@@ -15,6 +15,10 @@ Transaction::Transaction(
       walletId(walletId),
       description(description)
 {}
+const Date& Transaction::getDate() const
+{
+    return date;
+}
 double Transaction::getAmount() const
 {
     return amount;
