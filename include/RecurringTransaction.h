@@ -1,6 +1,5 @@
-#ifndef RECURRINGTRANSACTION_H
-#define RECURRINGTRANSACTION_H
-using namespace std;
+#ifndef RECURRING_TRANSACTION_H
+#define RECURRING_TRANSACTION_H
 #include <string>
 #include "Date.h"
 enum TransactionType
@@ -10,35 +9,27 @@ enum TransactionType
 };
 class RecurringTransaction
 {
-    private:
+private:
     TransactionType type;
     Date startDate;
     Date endDate;
-    
     bool hasEndDate;
-    
-    string SourceOrCategoryId;
-    string WalletId;
-
+    std::string sourceOrCategoryId;
+    std::string walletId;
     double amount;
-    string decription;
-
-    public:
+    std::string description;
+public:
     RecurringTransaction();
     RecurringTransaction(
-    TransactionType type,
-    Date startDate,
-    Date endDate,
-    
-    bool hasEndDate,
-    
-    string SourceOrCategoryId,
-    string WalletId,
+        TransactionType type,
+        const Date& startDate,
+        const Date& endDate,
+        bool hasEndDate,
+        const std::string& sourceOrCategoryId,
+        const std::string& walletId,
+        double amount,
+        const std::string& description);
 
-    double amount,
-    string decription
-    );
     void display() const;
-
 };
 #endif
