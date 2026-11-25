@@ -1,27 +1,32 @@
 #include "../include/Expense.h"
 #include <iostream>
-using namespace std;
-Expense :: Expense()
-{
-    sourceId = "";
-}
-Expense :: Expense(
-    Date date,
-    string sourceId,
+Expense::Expense()
+    : Transaction(),
+      categoryId("")
+{}
+Expense::Expense(
+    const Date& date,
+    const std::string& categoryId,
     double amount,
-    string WalletId,
-    string decription
-)
-    : Transaction(date , amount , WalletId, decription)
+    const std::string& walletId,
+    const std::string& description)
+    : Transaction(
+          date,
+          amount,
+          walletId,
+          description),
+      categoryId(categoryId)
+{}
+const std::string& Expense::getCategoryId() const
 {
-    this-> sourceId = sourceId;
-}
-string Expense::getsourceId() const
-{
-    return sourceId;
+    return categoryId;
 }
 void Expense::display() const
 {
-    cout << "Expense\n"
-         << "Amount:" << amount << endl;
+    std::cout
+        << "Expense\n"
+        << "Category Id: " << categoryId << '\n'
+        << "Wallet Id: " << walletId << '\n'
+        << "Amount: " << amount << '\n'
+        << "Description: " << description << '\n';
 }
