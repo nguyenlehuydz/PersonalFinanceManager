@@ -1,20 +1,20 @@
 #ifndef WALLET_H
 #define WALLET_H
 #include <string>
-using namespace std;
 class Wallet
 {
-  private:
-    string WalletId;
-    string WalletName;
-  public:
+private:
+    std::string id;
+    std::string name;
+public:
     Wallet();
-    Wallet ( string Id , string Name);
-    void setId(string Id);
-    void setName(string Name);
-    string getId() const;
-    string getName() const;
+    Wallet(
+        const std::string& id,
+        const std::string& name);
+    void setId(const std::string& id);
+    void setName(const std::string& name);
+    const std::string& getId() const;
+    const std::string& getName() const;
     void display() const;
-    
 };
 #endif
