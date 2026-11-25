@@ -26,6 +26,12 @@ private:
     void showHeaderTransaction() const;
     void showTransactionDashboard()const;
     void handleChoiceTransaction(int &choiceTransactionManager, bool &isRunningTransactionManager);
+
+    void showRecurringTransaction() const;
+    void showHeaderRecurring() const;
+    void showRecurringDashboard() const;
+    void runRecurringManager();
+    void handleChoiceRecurring(int &choiceRecurring, bool &isRunningRecurring);
 };
 
 #endif

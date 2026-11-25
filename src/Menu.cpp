@@ -514,3 +514,43 @@ static void readTransactionInputLine(const std::string& line, std::string& date,
         name += token;
     }
 }
+
+
+
+
+
+
+
+
+void Menu::showRecurringTransaction() const {
+    std::cout << Color::BOLD << "  RECURRING TRANSACTIONS :\n" << Color::RESET;
+    if (recurringTransactions.size() == 0) {
+        std::cout << "    (No recurring transaction is added)\n";
+    } else {
+        std::cout << "    "
+                  << std::left  << std::setw(6)  << "STT"
+                  << std::left  << std::setw(8)  << "ID"
+                  << std::left  << std::setw(12) << "Start"
+                  << std::left  << std::setw(12) << "End"
+                  << std::left  << std::setw(22) << "Name"
+                  << std::left  << std::setw(8)  << "Wallet"
+                  << std::right << std::setw(12) << "Amount"
+                  << "\n";
+        std::cout << "    --------------------------------------------------------------------------------\n";
+
+        for (int i = 0; i < RecurringTransaction.size(); i++) {
+            const auto& r = RecurringTransaction[i];
+            std::string endStr = r.hasEndDate ? r.endDate : "None";
+            std::cout << "    "
+                      << std::left  << std::setw(6)  << ("[" + std::to_string(i + 1) + "]")
+                      << std::left  << std::setw(8)  << r.sourceOrCategoryId
+                      << std::left  << std::setw(12) << r.startDate
+                      << std::left  << std::setw(12) << endStr
+                      << std::left  << std::setw(22) << r.description
+                      << std::left  << std::setw(8)  << r.walletid
+                      << std::right << std::setw(12) << r.amount
+                      << "\n";
+        }
+    }
+    return;
+}
