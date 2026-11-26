@@ -26,9 +26,9 @@ void Menu::clearScreen() const {
 
 void Menu::showHeader() const {
     std::cout << Color::CYAN << Color::BOLD;
-    std::cout << "  ==================================================\n";
-    std::cout << "  |            PERSONAL FINANCE MANAGEMENT          |\n";
-    std::cout << "  ==================================================\n";
+    std::cout << "  ============================================================================\n";
+    std::cout << "  |                      PERSONAL FINANCE MANAGEMENT                          |\n";
+    std::cout << "  ============================================================================\n";
     std::cout << Color::RESET;
     return;
 }
@@ -157,9 +157,9 @@ void Menu::showWalletVer2() const {
 
 void Menu::showHeaderWallet() const {
     std::cout << Color::CYAN << Color::BOLD;
-    std::cout << "  ==================================================\n";
-    std::cout << "  |                 WALLET  MANAGEMENT              |\n";
-    std::cout << "  ==================================================\n";
+    std::cout << "  ============================================================================\n";
+    std::cout << "  |                            WALLET MANAGEMENT                              |\n";
+    std::cout << "  ============================================================================\n";
     std::cout << Color::RESET;
     return;
 }
@@ -349,9 +349,9 @@ void Menu::showExpenseTransaction() const {
 
 void Menu::showHeaderTransaction() const {
     std::cout << Color::CYAN << Color::BOLD;
-    std::cout << "  ==================================================\n";
-    std::cout << "  |                    TRANSACTION                  |\n";
-    std::cout << "  ==================================================\n";
+    std::cout << "  ============================================================================\n";
+    std::cout << "  |                                TRANSACTION                                |\n";
+    std::cout << "  ============================================================================\n";
     std::cout << Color::RESET;
     return;
 }
@@ -598,9 +598,9 @@ void Menu::showRecurringTransaction() const {
 
 void Menu::showHeaderRecurring() const {
     std::cout << Color::CYAN << Color::BOLD;
-    std::cout << "  ==================================================\n";
-    std::cout << "  |              RECURRING TRANSACTIONS              |\n";
-    std::cout << "  ==================================================\n";
+    std::cout << "  ============================================================================\n";
+    std::cout << "  |                           RECURRING TRANSACTION                           |\n";
+    std::cout << "  ============================================================================\n";
     std::cout << Color::RESET;
     return;
 }
@@ -804,4 +804,57 @@ static bool readRecurringInputLine(std::string& sourceId,
     return true;
 }
 
+
+
+
+
+
+void Menu::showHeaderStatistics() const {
+    std::cout << Color::CYAN << Color::BOLD;
+    std::cout << "  ============================================================================\n";
+    std::cout << "  |                        STATISTICS AND REPORTING                           |\n";
+    std::cout << "  ============================================================================\n";
+    std::cout << Color::RESET;
+    return;
+}
+
+void Menu::showStatisticsDashboard() const {
+    showHeaderStatistics();
+    std::cout << "  " << Color::GREEN << "[1]" << Color::RESET << " Time-based Statistics (From Date A to Date B)\n";
+    std::cout << "  " << Color::GREEN << "[2]" << Color::RESET << " Time & Wallet-based Statistics\n";
+    std::cout << "  " << Color::GREEN << "[3]" << Color::RESET << " Annual Income/Expense Overview\n";
+    std::cout << "  " << Color::GREEN << "[4]" << Color::RESET << " Annual Income Breakdown (by Source)\n";
+    std::cout << "  " << Color::GREEN << "[5]" << Color::RESET << " Annual Expense Breakdown (by Category)\n";
+    std::cout << "  " << Color::RED   << "[0]" << Color::RESET << " Back to Dashboard\n";
+    std::cout << "  ----------------------------------------------------------------------------\n";
+    std::cout << Color::BOLD << "  Enter your choice: " << Color::RESET;
+    return;
+}
+
+void Menu::runStatisticsManager() {
+    bool isRunningStats = true;
+    int choiceStats{};
+    while (isRunningStats) {
+        clearScreen();
+        showStatisticsMenu();
+
+        if (!(std::cin >> choiceStats)) {
+            std::cout << "\n  " << Color::RED << "[ERROR] Please enter a valid integer!" << Color::RESET << "\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "\n  Press Enter to continue...";
+            std::cin.get();
+            continue;
+        }
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        handleChoiceStatistics(choiceStats, isRunningStats);
+
+        if (isRunningStats) {
+            std::cout << "\n  Press Enter to continue...";
+            std::cin.get();
+        }
+    }
+    return;
+}
 
