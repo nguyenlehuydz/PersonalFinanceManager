@@ -858,3 +858,49 @@ void Menu::runStatisticsManager() {
     return;
 }
 
+static bool readSingleDate(Date& outDate) {
+    std::string line;
+    if (!std::getline(std::cin, line)) return false;
+    std::istringstream iss(line);
+    std::string dateStr, extra;
+    if (!(iss >> dateStr) || (iss >> extra)) {
+        return false;
+    }
+    Date tmp = Date::fromString(dateStr);
+    if (!tmp.isValid()) {
+        return false;
+    }
+    outDate = tmp;
+    return true;
+}
+
+void Menu::handleChoiceStatistics(int choiceStats, bool& isRunningStats) {
+    std::cout << "\n";
+    switch (choiceStats) {
+        case 1: {
+            Date startDate, endDate;
+            cout<<"  [INFO] Enter start date (DD/MM/YYYY):\n  > ";
+            if (!readSingleDate(startDate)) {
+                std::cout << Color::RED << "  [ERROR] Invalid start date!\n" << Color::RESET;
+                break;
+            }
+            cout<<"  [INFO] Enter start date (DD/MM/YYYY):\n  > ";
+            if (!readSingleDate(endDate)) {
+                std::cout << Color::RED << "  [ERROR] Invalid end date!\n" << Color::RESET;
+                break;
+            }
+
+            long long totalIncome, totalExpense , netBalance;
+            financeManager.getTimeStatistic(startDate,endDate,totalIncome,totalExpense,netBalance);
+            std::cout << "\n  ----------------------------------------------------------------------------\n";
+            std::cout << "  Period        : " << startDate << " -> " << endDate << "\n";
+            std::cout << "  ----------------------------------------------------------------------------\n";
+            std::cout << "  Total Income  : " << std::right << std::setw(15) << formatMoney(totalIncome)  << " VND\n";
+            std::cout << "  Total Expense : " << std::right << std::setw(15) << formatMoney(totalExpense) << " VND\n";
+            std::cout << "  ----------------------------------------------------------------------------\n";
+            std::cout << "  Net Balance   : " << std::right << std::setw(15) << formatMoney(netBalance)   << " VND\n";
+            std::cout << "  ----------------------------------------------------------------------------\n";
+            break;
+        }
+    }
+}
