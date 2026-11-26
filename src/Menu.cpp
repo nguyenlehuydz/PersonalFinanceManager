@@ -902,5 +902,25 @@ void Menu::handleChoiceStatistics(int choiceStats, bool& isRunningStats) {
             std::cout << "  ----------------------------------------------------------------------------\n";
             break;
         }
+        case 2:{
+            showWalletVer2();
+            Date startDate, endDate;
+            cout<<"  [INFO] Enter start date (DD/MM/YYYY):\n  > ";
+            if (!readSingleDate(startDate)) {
+                std::cout << Color::RED << "  [ERROR] Invalid start date!\n" << Color::RESET;
+                break;
+            }
+            cout<<"  [INFO] Enter start date (DD/MM/YYYY):\n  > ";
+            if (!readSingleDate(endDate)) {
+                std::cout << Color::RED << "  [ERROR] Invalid end date!\n" << Color::RESET;
+                break;
+            }
+            std::cout << Color::MAGENTA << "  [INFO] Enter wallet ID:\n  > " << Color::RESET;
+            std::string walletId;
+            std::getline(std::cin, walletId);
+            long long totalIncome, totalExpense , netBalance;
+            
+            break;
+        }
     }
 }
