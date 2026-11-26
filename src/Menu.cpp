@@ -64,6 +64,7 @@ void Menu::handleChoice(int &choice, bool& isRunning) {
             break;
         case 3:
             std::cout << Color::MAGENTA << "  [INFO] Opening Recurring Transactions..." << Color::RESET << "\n";
+            runRecurringManager();
             break;
         case 4:
             std::cout << Color::MAGENTA << "  [INFO] Opening Statistics..." << Color::RESET << "\n";
