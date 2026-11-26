@@ -6,6 +6,8 @@ public:
     void run();
 
 private:
+    FinanceManager financeManager;
+
     char txViewMode{'I'};
     void clearScreen() const;
     void showHeader()const;

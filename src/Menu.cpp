@@ -35,7 +35,7 @@ void Menu::showHeader() const {
 
 void Menu::showDashboard()const {
     showHeader();
-    long long totalBalance = getTotalBalance();
+    long long totalBalance = financeManager.getTotalBalance();
     std::cout << Color::BOLD << "  TOTAL BALANCE: " << totalBalance << " VND\n" << Color::RESET;
     std::cout << "  --------------------------------------------------\n";
     showWallet();
@@ -105,7 +105,7 @@ void Menu::run() {
 
 void Menu::showWallet() const {
     std::cout << Color::BOLD << "  WALLET BALANCES:\n" << Color::RESET;
-    if (wallets.size() == 0) {
+    if (financeManager.wallets.size() == 0) {
         std::cout << "    (No wallet is added)\n";
     }
     else{
@@ -114,12 +114,12 @@ void Menu::showWallet() const {
                   << std::left  << std::setw(20) << "Bank Account" 
                   << std::right << std::setw(18) << "Cash (VND)" << "\n";
         std::cout << "    ------------------------------------------\n";
-        for(int i=0;i<wallets.size();i++){
-            const Wallet& w = wallets[i];
+        for(int i=0;i<financeManager.wallets.size();i++){
+            const Wallet& w = financeManager.wallets[i];
             std::cout << "    " 
                       << std::left  << std::setw(6)  << ("[" + std::to_string(i + 1) + "]")
-                      << std::left  << std::setw(20) << w.getName
-                      << std::right << std::setw(18) << getWalletBalance(w.getId())
+                      << std::left  << std::setw(20) << financeManager.getWalletName(w.getId())
+                      << std::right << std::setw(18) << financeManager.getWalletBalance(w.getId())
                       << "\n";
         }
     }
@@ -128,7 +128,7 @@ void Menu::showWallet() const {
 
 void Menu::showWalletVer2() const {
     std::cout << Color::BOLD << "  WALLET BALANCES:\n" << Color::RESET;
-    if (wallets.size() == 0) {
+    if (financeManager.wallets.size() == 0) {
         std::cout << "    (No wallet is added)\n";
     }
     else{
@@ -140,8 +140,8 @@ void Menu::showWalletVer2() const {
                 << "\n";
         std::cout << "  ----------------------------------------------------------\n";
 
-        for (int i = 0; i < wallets.size(); ++i) {
-            const Wallet& w = wallets[i];
+        for (int i = 0; i < financeManager.wallets.size(); ++i) {
+            const Wallet& w = financeManager.wallets[i];
             std::cout << "  "
                     << std::left  << std::setw(6)  << ("[" + std::to_string(i + 1) + "]")
                     << std::left  << std::setw(10) << w.getId()
@@ -207,7 +207,7 @@ void Menu::handleChoiceWallet(int &choiceWalletManager, bool& isRunningWalletMan
             std::string line,name,id;
             long long balance;
             readWalletLine(line,id,name,balance);
-            if(addWallet(id,name,balance))std::cout << Color::MAGENTA << " SAVED!!! " << Color::RESET << "\n";
+            if(financeManager.addWallet(id,name,balance))std::cout << Color::MAGENTA << " SAVED!!! " << Color::RESET << "\n";
             else std::cout << Color::MAGENTA << "  [ERROR]Can not save!!! " << Color::RESET << "\n";
             break;
         case 2:
@@ -216,7 +216,7 @@ void Menu::handleChoiceWallet(int &choiceWalletManager, bool& isRunningWalletMan
             std::string line,name,id;
             long long balance;
             readWalletLine(line,id,name,balance);
-            if(editWallet(id,name,balance))std::cout << Color::MAGENTA << " SAVED!!! " << Color::RESET << "\n";
+            if(financeManager.editWallet(id,name,balance))std::cout << Color::MAGENTA << " SAVED!!! " << Color::RESET << "\n";
             else std::cout << Color::MAGENTA << " [ERROR]Id was not found!!!" << Color::RESET << "\n";
             break;
         case 3:
@@ -224,7 +224,7 @@ void Menu::handleChoiceWallet(int &choiceWalletManager, bool& isRunningWalletMan
             std::cout << Color::MAGENTA << "  [INFO] Pls enter your wallet's id: " << Color::RESET << "\n";
             std::string id;
             getline(cin,id);
-            if(deleteWallet(id))std::cout << Color::MAGENTA << " SAVED!!! " << Color::RESET << "\n";
+            if(financeManager.deleteWallet(id))std::cout << Color::MAGENTA << " SAVED!!! " << Color::RESET << "\n";
             else std::cout << Color::MAGENTA << " [ERROR]Id was not found!!!" << Color::RESET << "\n";
             break;
         case 0:
@@ -284,7 +284,7 @@ void readWalletLine(const std::string& line, std::string& id, std::string& name,
 
 void Menu::showIncomeTransaction() const {
     std::cout << Color::BOLD << "  INCOME TRANSACTION:\n" << Color::RESET;
-    if (Income.size() == 0) {
+    if (financeManager.Income.size() == 0) {
         std::cout << "    (No transaction is added)\n";
     }
     else{
@@ -298,13 +298,13 @@ void Menu::showIncomeTransaction() const {
                   << std::right << std::setw(11) << "Amount"
                   << "\n";
         std::cout << "    ------------------------------------------\n";
-        for(int i=0;i<Income.size();i++){
-            const auto& t = Income[i];  
+        for(int i=0;i<financeManager.Income.size();i++){
+            const auto& t = financeManager.Income[i];  
             std::cout << "    "
                       << std::left  << std::setw(6)  << ("[" + std::to_string(i + 1) + "]")
                       << std::left  << std::setw(11) << t.date
                       << std::left  << std::setw(7)  << t.sourceId
-                      << std::left  << std::setw(14) << getIncomeSourceName(t.sourceId)
+                      << std::left  << std::setw(14) << financeManager.getIncomeSourceName(t.sourceId)
                       << std::left  << std::setw(7)  << t.walletid
                       << std::left  << std::setw(16) << t.description
                       << std::right << std::setw(11) << t.amount
@@ -316,7 +316,7 @@ void Menu::showIncomeTransaction() const {
 
 void Menu::showExpenseTransaction() const {
     std::cout << Color::BOLD << "  EXPENSE TRANSACTION:\n" << Color::RESET;
-    if (Expense.size() == 0) {
+    if (financeManager.Expense.size() == 0) {
         std::cout << "    (No transaction is added)\n";
     }
     else{
@@ -330,13 +330,13 @@ void Menu::showExpenseTransaction() const {
                   << std::right << std::setw(11) << "Amount"
                   << "\n";
         std::cout << "    ------------------------------------------\n";
-        for(int i=0;i<Expense.size();i++){
+        for(int i=0;i<financeManager.Expense.size();i++){
             const auto& t = Expense[i];  
             std::cout << "    "
                       << std::left  << std::setw(6)  << ("[" + std::to_string(i + 1) + "]")
                       << std::left  << std::setw(11) << t.date
                       << std::left  << std::setw(7)  << t.sourceId
-                      << std::left  << std::setw(14) << getExpenseCatagoryName(t.sourceId)
+                      << std::left  << std::setw(14) << financeManager.getExpenseCatagoryName(t.sourceId)
                       << std::left  << std::setw(7)  << t.walletid
                       << std::left  << std::setw(16) << t.description
                       << std::right << std::setw(11) << t.amount
@@ -431,7 +431,6 @@ void Menu::handleChoiceTransaction(int &choiceTransactionManager, bool& isRunnin
 
             std::cout << Color::MAGENTA
                       << "  [INFO] Enter: <date> <sourceId> <walletId> <amount> <name> | <description>\n"
-                      << "  [INFO] Example: 26/11/2026 S02 W01 55000 An trua | Com trua van phong\n"
                       << Color::RESET << "  ";
 
             std::string line, date, sourceId, walletId, name, description;
@@ -441,9 +440,9 @@ void Menu::handleChoiceTransaction(int &choiceTransactionManager, bool& isRunnin
 
             bool ok = false;
             if (type == 'I') {
-                ok = addIncome(date, sourceId, amount, walletId, name, description);
+                ok = financeManager.addIncome(date, sourceId, amount, walletId, name, description);
             } else if (type == 'E') {
-                ok = addExpense(date, sourceId, amount, walletId, name, description);
+                ok = financeManager.addExpense(date, sourceId, amount, walletId, name, description);
             }
 
             if (ok) {
@@ -468,8 +467,8 @@ void Menu::handleChoiceTransaction(int &choiceTransactionManager, bool& isRunnin
             std::getline(std::cin, line);
             readTransactionInputLine(line, date, sourceId, walletId, amount, name, description);
 
-            if (editIncome(id, date, sourceId, walletId, amount, name, description) ||
-                editExpense(id, date, sourceId, walletId, amount, name, description)) {
+            if (financeManager.editIncome(id, date, sourceId, walletId, amount, name, description) ||
+                financeManager.editExpense(id, date, sourceId, walletId, amount, name, description)) {
                 std::cout << Color::GREEN << "  SAVED!!!\n" << Color::RESET;
             } else {
                 std::cout << Color::RED << "  [ERROR] ID was not found or can not update!!!\n" << Color::RESET;
@@ -484,7 +483,7 @@ void Menu::handleChoiceTransaction(int &choiceTransactionManager, bool& isRunnin
             std::string id;
             std::getline(std::cin, id);
 
-            if (deleteIncomeSource(id) || deleteExpenseCategory(id)) {
+            if (financeManager.deleteIncomeSource(id) || financeManager.deleteExpenseCategory(id)) {
                 std::cout << Color::GREEN << "  DELETED / SAVED!!!\n" << Color::RESET;
             } else {
                 std::cout << Color::RED << "  [ERROR] ID was not found!!!\n" << Color::RESET;
@@ -553,7 +552,7 @@ static std::string clipText(const std::string& text, size_t maxLen) {
 
 void Menu::showRecurringTransaction() const {
     std::cout << Color::BOLD << "  RECURRING TRANSACTIONS :\n" << Color::RESET;
-    if (recurringTransactions.size() == 0) {
+    if (financeManager.recurringTransactions.size() == 0) {
         std::cout << "    (No recurring transaction is added)\n";
     } else {
         std::cout << "    "
@@ -570,8 +569,8 @@ void Menu::showRecurringTransaction() const {
               << "\n";
         std::cout << "    --------------------------------------------------------------------------\n";
 
-        for (int i = 0; i < RecurringTransaction.size(); i++) {
-            const auto& r = RecurringTransactions[i];
+        for (int i = 0; i < financeManager.RecurringTransaction.size(); i++) {
+            const auto& r = financeManager.RecurringTransactions[i];
             std::string typeStr = (r.getType() == RecurringType::INCOME) ? "INCOME" : "EXPENSE";
             std::string srcid = r.getSourceOrCategoryId();
             std::string nameStr = getSourceOrCategoryName(srcid);
@@ -654,7 +653,6 @@ void Menu::handleChoiceRecurring(int &choiceRecurring, bool& isRunningRecurring)
 
             std::cout << Color::MAGENTA
                       << "  [INFO] Enter: <sourceId> <walletId> <amount> <dayOfMonth> <startDate> <endDate or -> <description>\n"
-                      << "  [INFO] Example: C01 W01 3000000 5 01/11/2026 - Tien phong tro\n"
                       << Color::RESET << "  ";
 
             std::string sourceId, walletId, description;
@@ -668,8 +666,7 @@ void Menu::handleChoiceRecurring(int &choiceRecurring, bool& isRunningRecurring)
                 break;
             }
 
-            if (financeManager.addRecurringTransaction(
-                    rType, sourceId, amount, walletId, description, startDate, hasEndDate, endDate, dayOfMonth)) {
+            if (financeManager.addRecurringTransaction(rType, sourceId, amount, walletId, description, startDate, hasEndDate, endDate, dayOfMonth)) {
                 std::cout << Color::GREEN << "  SAVED!!!\n" << Color::RESET;
             } else {
                 std::cout << Color::RED << "  [ERROR] Can not save recurring transaction!\n" << Color::RESET;
@@ -704,8 +701,7 @@ void Menu::handleChoiceRecurring(int &choiceRecurring, bool& isRunningRecurring)
                 break;
             }
 
-            if (financeManager.editRecurringTransaction(
-                    id, rType, sourceId, amount, walletId, description, startDate, hasEndDate, endDate, dayOfMonth)) {
+            if (financeManager.editRecurringTransaction(id, rType, sourceId, amount, walletId, description, startDate, hasEndDate, endDate, dayOfMonth)) {
                 std::cout << Color::GREEN << "  SAVED!!!\n" << Color::RESET;
             } else {
                 std::cout << Color::RED << "  [ERROR] ID was not found or can not update!!!\n" << Color::RESET;
@@ -721,7 +717,7 @@ void Menu::handleChoiceRecurring(int &choiceRecurring, bool& isRunningRecurring)
             std::getline(std::cin, id);
 
             if (financeManager.deleteRecurringTransaction(id)) {
-                std::cout << Color::GREEN << "  DELETED / SAVED!!!\n" << Color::RESET;
+                std::cout << Color::GREEN << " SAVED!!!\n" << Color::RESET;
             } else {
                 std::cout << Color::RED << "  [ERROR] ID was not found!!!\n" << Color::RESET;
             }
@@ -806,3 +802,5 @@ static bool readRecurringInputLine(std::string& sourceId,
     }
     return true;
 }
+
+
