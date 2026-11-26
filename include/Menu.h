@@ -34,6 +34,12 @@ private:
     void showRecurringDashboard() const;
     void runRecurringManager();
     void handleChoiceRecurring(int &choiceRecurring, bool &isRunningRecurring);
+
+    void showStatistics() const;
+    void showHeaderStatistics() const;
+    void showStatisticsDashboard() const;
+    void runStatisticsManager();
+    void handleChoiceStatistics(int &choiceStatistics, bool &isRunningStatistics);
 };
 
 #endif
