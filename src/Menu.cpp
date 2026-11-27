@@ -1054,10 +1054,15 @@ void Menu::handleChoiceStatistics(int choiceStats, bool& isRunningStats) {
             std::cout << "    ------------------------------------------------------------------------\n";
             break;
         }
+        case 0:
+            std::cout << Color::GREEN << "  Return to Dashboard now!!!" << Color::RESET << "\n";
+            isRunningStats = false;
+            break;
 
-
-
+        default:
+            std::cout << Color::RED << "  [ERROR] Invalid choice! Please select a number from 0 to 5.\n" << Color::RESET;
     }
+    break;
 }
 
 void Menu::showAvailableYears() const {
