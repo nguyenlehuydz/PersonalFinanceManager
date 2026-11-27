@@ -968,11 +968,48 @@ void Menu::handleChoiceStatistics(int choiceStats, bool& isRunningStats) {
             for (auto y : result) {
                 std::cout << "    "
                           << std::left  << std::setw(7)  << y.year;
-                          << std::right << std::setw(17) << y.totalIncome
-                          << std::right << std::setw(18) << y.totalExpense
-                          << std::right << std::setw(18) << y.netBalance
+                          << std::right << std::setw(17) << formatMoney(y.totalIncome)
+                          << std::right << std::setw(18) << formatMoney(y.totalExpense)
+                          << std::right << std::setw(18) << formatMoney(y.netBalance)
                           << "\n";
             }
+            std::cout << "    ------------------------------------------------------------------------\n";
+            break;
+        }
+        case 4:{
+            showAvailableYears();
+            if (financeManager.getYears().size() == 0) {
+                std::cout << Color::RED
+                        << "  [WARN] There is no transaction data to generate annual statistics.\n"
+                        << Color::RESET;
+                break;
+            }
+            DynamicArray<int>years;
+            inputYearsUntilStop(years);
+            if (years.empty()) {
+                std::cout << Color::RED << "  [ERROR] No valid year entered!\n" << Color::RESET;
+                break;
+            }
+            long long totalincome;
+            DynamicArray<SourceSummary>res=financeManager.getIncomeBreakdown(years,totalincome);
+            std::cout << "\n  INCOME BREAKDOWN :\n";
+            std::cout << "    "
+                      << std::left  << std::setw(7)  << "STT"
+                      << std::left  << std::setw(37) << "Income Source"
+                      << std::right << std::setw(18) << "Amount"
+                      << "\n";
+            std::cout << "    ------------------------------------------------------------------------\n";
+            long long cnt=0;
+            for (auto s:res) {
+                std::cout << "    "
+                          << std::left  << std::setw(7)  << ("[" + std::to_string(cnt + 1) + "]")
+                          << std::left  << std::setw(37) << clipText(s.sourceName, 37)
+                          << std::right << std::setw(18) << formatMoney(s.totalAmount)
+                          << "\n";
+                cnt++;
+            }
+            std::cout << "    ------------------------------------------------------------------------\n";
+            std::cout << "    Total Income  : " << std::right << std::setw(15) << formatMoney(totalincome) << " VND\n";
             std::cout << "    ------------------------------------------------------------------------\n";
             break;
         }
@@ -1015,4 +1052,21 @@ static void inputYearsUntilStop(DynamicArray<int>&years){
         years.push(year);
     }
     return;
+}
+
+static std::string formatMoney(long long amount) {
+    bool neg = amount < 0;
+    unsigned long long val = neg ? static_cast<unsigned long long>(-(amount + 1)) + 1ULL
+                                 : static_cast<unsigned long long>(amount);
+    std::string s = std::to_string(val);
+    std::string out;
+    int count = 0;
+    for (auto it = s.rbegin(); it != s.rend(); ++it) {
+        if (count > 0 && count % 3 == 0) out.push_back(',');
+        out.push_back(*it);
+        ++count;
+    }
+    if (neg) out.push_back('-');
+    std::reverse(out.begin(), out.end());
+    return out;
 }
