@@ -62,7 +62,7 @@ void FinanceManager::getTimeAndWalletStatistics(const Date &start, const Date &e
     netBal = totalInc - totalEx;
 }
 
-DynamicArray<Income> getIncomeByWallet(const std::string &walletId, const Date &start, const Date &end) const {
+DynamicArray<Income> FinanceManager::getIncomesByWallet(const std::string &walletId, const Date &start, const Date &end) const {
     DynamicArray<Income> ans;
     for (int i = 0; i < incomes.size(); i++) {
         if (incomes[i].getWalletId() == walletId) {
@@ -75,7 +75,7 @@ DynamicArray<Income> getIncomeByWallet(const std::string &walletId, const Date &
     return ans;
 }
 
-DynamicArray<Expense> getExpensesByWallet(const std::string &walletId, const Date &start, const Date &end) const {
+DynamicArray<Expense> FinanceManager::getExpensesByWallet(const std::string &walletId, const Date &start, const Date &end) const {
     DynamicArray<Expense> res;
     for (int i = 0; i < expenses.size(); i++) {
         if (expenses[i].getWalletId() == walletId) {
