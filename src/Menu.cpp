@@ -119,8 +119,8 @@ void Menu::showWallet() const {
             const Wallet& w = financeManager.wallets[i];
             std::cout << "    " 
                       << std::left  << std::setw(6)  << ("[" + std::to_string(i + 1) + "]")
-                      << std::left  << std::setw(20) << financeManager.getWalletName(w.getId())
-                      << std::right << std::setw(18) << financeManager.getWalletBalance(w.getId())
+                      << std::left  << std::setw(20) << clipText(financeManager.getWalletName(w.getId()),20)
+                      << std::right << std::setw(18) << clipText(financeManager.getWalletBalance(w.getId()),18)
                       << "\n";
         }
     }
@@ -145,9 +145,9 @@ void Menu::showWalletVer2() const {
             const Wallet& w = financeManager.wallets[i];
             std::cout << "  "
                     << std::left  << std::setw(6)  << ("[" + std::to_string(i + 1) + "]")
-                    << std::left  << std::setw(10) << w.getId()
-                    << std::left  << std::setw(22) << w.getName()
-                    << std::right << std::setw(18) << w.getBalance()
+                    << std::left  << std::setw(10) << clipText(w.getId(),10)
+                    << std::left  << std::setw(22) << clipText(w.getName(),22)
+                    << std::right << std::setw(18) << formatMoney(w.getBalance())
                     << "\n";
         }
     }
@@ -304,11 +304,11 @@ void Menu::showIncomeTransaction() const {
             std::cout << "    "
                       << std::left  << std::setw(6)  << ("[" + std::to_string(i + 1) + "]")
                       << std::left  << std::setw(11) << t.date
-                      << std::left  << std::setw(7)  << t.sourceId
-                      << std::left  << std::setw(14) << financeManager.getIncomeSourceName(t.sourceId)
-                      << std::left  << std::setw(7)  << t.walletid
-                      << std::left  << std::setw(16) << t.description
-                      << std::right << std::setw(11) << t.amount
+                      << std::left  << std::setw(7)  << clipText(t.sourceId)
+                      << std::left  << std::setw(14) << clipText(financeManager.getIncomeSourceName(t.sourceId),14)
+                      << std::left  << std::setw(7)  << clipText(t.walletid,7)
+                      << std::left  << std::setw(16) << clipText(t.description,16)
+                      << std::right << std::setw(11) << formatMoney(t.amount)
                       << "\n";
         }
     }
@@ -336,11 +336,11 @@ void Menu::showExpenseTransaction() const {
             std::cout << "    "
                       << std::left  << std::setw(6)  << ("[" + std::to_string(i + 1) + "]")
                       << std::left  << std::setw(11) << t.date
-                      << std::left  << std::setw(7)  << t.sourceId
-                      << std::left  << std::setw(14) << financeManager.getExpenseCatagoryName(t.sourceId)
-                      << std::left  << std::setw(7)  << t.walletid
-                      << std::left  << std::setw(16) << t.description
-                      << std::right << std::setw(11) << t.amount
+                      << std::left  << std::setw(7)  << clipText(t.sourceId)
+                      << std::left  << std::setw(14) << clipText(financeManager.getExpenseCatagoryName(t.sourceId),14)
+                      << std::left  << std::setw(7)  << clipText(t.walletid,7)
+                      << std::left  << std::setw(16) << clipText(t.description,16)
+                      << std::right << std::setw(11) << formatMoney(t.amount)
                       << "\n";
         }
     }
@@ -587,7 +587,7 @@ void Menu::showRecurringTransaction() const {
                     << std::left  << std::setw(7)  << clipText(r.getWalletId(), 7)
                     << std::left  << std::setw(11) << clipText(startStr, 11)
                     << std::left  << std::setw(11) << clipText(endStr, 11)
-                    << std::right << std::setw(9)  << absAmount
+                    << std::right << std::setw(9)  << formatmoney(absAmount)
                     << " "
                     << std::left  << std::setw(8)  << clipText(r.getDescription(), 8)
                     << "\n";
