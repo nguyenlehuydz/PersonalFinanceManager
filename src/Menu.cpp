@@ -919,7 +919,16 @@ void Menu::handleChoiceStatistics(int choiceStats, bool& isRunningStats) {
             std::string walletId;
             std::getline(std::cin, walletId);
             long long totalIncome, totalExpense , netBalance;
-            
+            financeManager.getTimeAndWalletStatistics(startDate,endDate,walletId,totalIncome,totalExpense,netBalance);
+            std::cout << "\n  ----------------------------------------------------------------------------\n";
+            std::cout << "  Period        : " << startDate << " -> " << endDate << "\n";
+            std::cout << "  ----------------------------------------------------------------------------\n";
+            std::cout << "  Total Income  : " << std::right << std::setw(15) << formatMoney(totalIncome)  << " VND\n";
+            std::cout << "  Total Expense : " << std::right << std::setw(15) << formatMoney(totalExpense) << " VND\n";
+            std::cout << "  ----------------------------------------------------------------------------\n";
+            std::cout << "  Net Balance   : " << std::right << std::setw(15) << formatMoney(netBalance)   << " VND\n";
+            std::cout << "  ----------------------------------------------------------------------------\n";
+            break;
             break;
         }
     }
