@@ -62,6 +62,19 @@ void FinanceManager::getTimeAndWalletStatistics(const Date &start, const Date &e
     netBal = totalInc - totalEx;
 }
 
+DynamicArray<Expense> getExpensesByWallet(const std::string &walletId, const Date &start, const Date &end) const {
+    DynamicArray res;
+    for (int i = 0; i < expenses.size(); i++) {
+        if (expenses[i].getWalletId() == walletId) {
+            Date data = expenses[i].getDate();
+            if (data >= start && data <= end) {
+                res.push(expenses[i]);
+            }
+        }
+    }
+    return res;
+}
+
 DynamicArray<YearSummary> FinanceManager::getAnnualOverview(const DynamicArray<int> &years) const {
     DynamicArray<YearSummary> result;
     for (int i = 0; i < years.size(); i++) {
