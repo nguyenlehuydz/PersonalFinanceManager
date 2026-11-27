@@ -950,7 +950,30 @@ void Menu::handleChoiceStatistics(int choiceStats, bool& isRunningStats) {
                         << Color::RESET;
                 break;
             }
-            
+            DynamicArray<int>years;
+            inputYearsUntilStop(years);
+            if (years.empty()) {
+                std::cout << Color::RED << "  [ERROR] No valid year entered!\n" << Color::RESET;
+                break;
+            }
+            DynamicArray<YearSummary>result=financeManager.getAnnualOverview(years);
+            std::cout << "\n  ANNUAL OVERVIEW:\n";
+            std::cout << "    "
+                      << std::left  << std::setw(7)  << "Year"
+                      << std::right << std::setw(17) << "Total Income"
+                      << std::right << std::setw(18) << "Total Expense"
+                      << std::right << std::setw(18) << "Net Balance"
+                      << "\n";
+            std::cout << "    ------------------------------------------------------------------------\n";
+            for (auto y : result) {
+                std::cout << "    "
+                          << std::left  << std::setw(7)  << y.year;
+                          << std::right << std::setw(17) << y.totalIncome
+                          << std::right << std::setw(18) << y.totalExpense
+                          << std::right << std::setw(18) << y.netBalance
+                          << "\n";
+            }
+            std::cout << "    ------------------------------------------------------------------------\n";
             break;
         }
     }
@@ -972,5 +995,24 @@ void Menu::showAvailableYears() const {
         std::cout << Color::RESET << "\n";
     }
     std::cout << "  ----------------------------------------------------------------------------\n";
+    return;
+}
+
+static void inputYearsUntilStop(DynamicArray<int>&years){
+    years.clear();
+    std::cout << Color::MAGENTA
+                  << "  [INFO] Enter year (or enter 0 to stop): "
+                  << Color::RESET;
+    int year{};
+    while(cin>>year){
+        if(year==0){
+            break;
+        }
+        if(year<0){
+            std::cout << Color::RED << "  [ERROR] Invalid number! Skipped.\n" << Color::RESET;
+            continue;
+        }
+        years.push(year);
+    }
     return;
 }
