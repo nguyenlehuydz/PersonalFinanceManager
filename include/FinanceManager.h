@@ -101,6 +101,7 @@ class FinanceManager {
         void getTimeStatistic(const Date &start, const Date &end, long long &totalInc, long long &totalEx, long long &netBal) const;
         void getTimeAndWalletStatistics(const Date &start, const Date &end, const std::string &walletId, 
                                                 long long &totalInc, long long &totalEx, long long &netBal) const;
+        DynamicArray<Expense> getExpensesByWallet(const std::string &walletId, const Date &start, const Date &end) const;
         DynamicArray<YearSummary> getAnnualOverview(const DynamicArray<int> &years) const;
         DynamicArray<SourceSummary> getIncomeBreakdown(const DynamicArray<int> &years, long long &totalInc) const;
         DynamicArray<CategorySummary> getExpenseBreakdown(const DynamicArray<int> &years, long long &totalExp) const;
