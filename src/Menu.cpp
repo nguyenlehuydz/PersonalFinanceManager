@@ -1015,9 +1015,45 @@ void Menu::handleChoiceStatistics(int choiceStats, bool& isRunningStats) {
             std::cout << "    ------------------------------------------------------------------------\n";
             break;
         }
-
-
-
+        case 5:{
+            showAvailableYears();
+            if (financeManager.getYears().size() == 0) {
+                std::cout << Color::RED
+                        << "  [WARN] There is no transaction data to generate annual statistics.\n"
+                        << Color::RESET;
+                break;
+            }
+            DynamicArray<int>years;
+            inputYearsUntilStop(years);
+            if (years.empty()) {
+                std::cout << Color::RED << "  [ERROR] No valid year entered!\n" << Color::RESET;
+                break;
+            }
+            long long totalexpense;
+            DynamicArray<CategorySummary>ans=financeManager.getExpenseBreakdown(years,totalexpense);
+            std::cout << "\n  EXPENSE BREAKDOWN :\n";
+            std::cout << "    "
+                      << std::left  << std::setw(7)  << "STT"
+                      << std::left  << std::setw(9)  << "ID"
+                      << std::left  << std::setw(35) << "Expense Category"
+                      << std::right << std::setw(21) << "Amount"
+                      << "\n";
+            std::cout << "    ------------------------------------------------------------------------\n";
+            long long cnt=0;
+            for (auto s:ans) {
+                std::cout << "    "
+                          << std::left  << std::setw(7)  << ("[" + std::to_string(cnt + 1) + "]")
+                          << std::left  << std::setw(9)  << clipText(s.categoryID, 8)
+                          << std::left  << std::setw(35) << clipText(s.categoryName, 34)
+                          << std::right << std::setw(21) << formatMoney(s.totalAmount)
+                          << "\n";
+                cnt++;
+            }
+            std::cout << "    ------------------------------------------------------------------------\n";
+            std::cout << "    Total Expense  : " << std::right << std::setw(15) << formatMoney(totalexpense) << " VND\n";
+            std::cout << "    ------------------------------------------------------------------------\n";
+            break;
+        }
 
 
 
