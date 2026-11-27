@@ -7,7 +7,8 @@ public:
 
 private:
     FinanceManager financeManager;
-
+    void showAvailableYears() const;
+    
     char txViewMode{'I'};
     void clearScreen() const;
     void showHeader()const;

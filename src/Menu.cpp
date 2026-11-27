@@ -921,15 +921,56 @@ void Menu::handleChoiceStatistics(int choiceStats, bool& isRunningStats) {
             long long totalIncome, totalExpense , netBalance;
             financeManager.getTimeAndWalletStatistics(startDate,endDate,walletId,totalIncome,totalExpense,netBalance);
             std::cout << "\n  ----------------------------------------------------------------------------\n";
+            std::cout << "  Wallet        : " << walletId << " -- " << financeManager.getWalletName(walletId) << "\n";
             std::cout << "  Period        : " << startDate << " -> " << endDate << "\n";
             std::cout << "  ----------------------------------------------------------------------------\n";
+            std::cout << "    "
+                      << std::left  << std::setw(12) << "Date"
+                      << std::left  << std::setw(9)  << "Type"
+                      << std::left  << std::setw(17) << "Name"
+                      << std::left  << std::setw(21) << "Description"
+                      << std::right << std::setw(13) << "Amount"
+                      << "\n";
+            std::cout << "    ------------------------------------------------------------------------\n";
+            
+
+
             std::cout << "  Total Income  : " << std::right << std::setw(15) << formatMoney(totalIncome)  << " VND\n";
             std::cout << "  Total Expense : " << std::right << std::setw(15) << formatMoney(totalExpense) << " VND\n";
             std::cout << "  ----------------------------------------------------------------------------\n";
             std::cout << "  Net Balance   : " << std::right << std::setw(15) << formatMoney(netBalance)   << " VND\n";
             std::cout << "  ----------------------------------------------------------------------------\n";
             break;
+        }
+        case 3:{
+            showAvailableYears();
+            if (financeManager.getYears().size() == 0) {
+                std::cout << Color::RED
+                        << "  [WARN] There is no transaction data to generate annual statistics.\n"
+                        << Color::RESET;
+                break;
+            }
+            
             break;
         }
     }
+}
+
+void Menu::showAvailableYears() const {
+    DynamicArray<int> availYears = financeManager.getYears();
+    std::cout << "  ----------------------------------------------------------------------------\n";
+    std::cout << "  Available Years (with transactions) : ";
+
+    if (availYears.size() == 0) {
+        std::cout << Color::YELLOW << "(No transaction data found)" << Color::RESET << "\n";
+    } else {
+        std::cout << Color::GREEN;
+        for (int i = 0; i < availYears.size(); ++i) {
+            if (i > 0) std::cout << ", ";
+            std::cout << availYears[i];
+        }
+        std::cout << Color::RESET << "\n";
+    }
+    std::cout << "  ----------------------------------------------------------------------------\n";
+    return;
 }
