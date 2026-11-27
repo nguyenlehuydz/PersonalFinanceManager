@@ -995,16 +995,18 @@ void Menu::handleChoiceStatistics(int choiceStats, bool& isRunningStats) {
             std::cout << "\n  INCOME BREAKDOWN :\n";
             std::cout << "    "
                       << std::left  << std::setw(7)  << "STT"
-                      << std::left  << std::setw(37) << "Income Source"
-                      << std::right << std::setw(18) << "Amount"
+                      << std::left  << std::setw(9)  << "ID"
+                      << std::left  << std::setw(35) << "Income Source"
+                      << std::right << std::setw(21) << "Amount"
                       << "\n";
             std::cout << "    ------------------------------------------------------------------------\n";
             long long cnt=0;
             for (auto s:res) {
                 std::cout << "    "
                           << std::left  << std::setw(7)  << ("[" + std::to_string(cnt + 1) + "]")
-                          << std::left  << std::setw(37) << clipText(s.sourceName, 37)
-                          << std::right << std::setw(18) << formatMoney(s.totalAmount)
+                          << std::left  << std::setw(9)  << clipText(s.sourceID, 8)
+                          << std::left  << std::setw(35) << clipText(s.sourceName, 34)
+                          << std::right << std::setw(21) << formatMoney(s.totalAmount)
                           << "\n";
                 cnt++;
             }
@@ -1013,6 +1015,12 @@ void Menu::handleChoiceStatistics(int choiceStats, bool& isRunningStats) {
             std::cout << "    ------------------------------------------------------------------------\n";
             break;
         }
+
+
+
+
+
+
     }
 }
 
