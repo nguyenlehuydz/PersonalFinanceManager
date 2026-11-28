@@ -68,6 +68,7 @@ void Menu::handleChoice(int &choice, bool& isRunning) {
             break;
         case 4:
             std::cout << Color::MAGENTA << "  [INFO] Opening Statistics..." << Color::RESET << "\n";
+            runStatisticsManager();
             break;
         case 0:
             std::cout << Color::GREEN << "  Thank you for using the application. Goodbye!" << Color::RESET << "\n";
