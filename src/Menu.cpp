@@ -934,7 +934,7 @@ void Menu::handleChoiceStatistics(int choiceStats, bool& isRunningStats) {
             std::cout << "    ------------------------------------------------------------------------\n";
             
 
-
+            std::cout << "    ------------------------------------------------------------------------\n";
             std::cout << "  Total Income  : " << std::right << std::setw(15) << formatMoney(totalIncome)  << " VND\n";
             std::cout << "  Total Expense : " << std::right << std::setw(15) << formatMoney(totalExpense) << " VND\n";
             std::cout << "  ----------------------------------------------------------------------------\n";
