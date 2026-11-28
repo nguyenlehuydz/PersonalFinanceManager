@@ -307,7 +307,7 @@ void Menu::showIncomeTransaction() const {
                       << std::left  << std::setw(11) << t.date
                       << std::left  << std::setw(7)  << clipText(t.sourceId)
                       << std::left  << std::setw(14) << clipText(financeManager.getIncomeSourceName(t.sourceId),14)
-                      << std::left  << std::setw(7)  << clipText(t.walletid,7)
+                      << std::left  << std::setw(7)  << clipText(t.walletId,7)
                       << std::left  << std::setw(16) << clipText(t.description,16)
                       << std::right << std::setw(11) << formatMoney(t.amount)
                       << "\n";
@@ -339,7 +339,7 @@ void Menu::showExpenseTransaction() const {
                       << std::left  << std::setw(11) << t.date
                       << std::left  << std::setw(7)  << clipText(t.sourceId)
                       << std::left  << std::setw(14) << clipText(financeManager.getExpenseCatagoryName(t.sourceId),14)
-                      << std::left  << std::setw(7)  << clipText(t.walletid,7)
+                      << std::left  << std::setw(7)  << clipText(t.walletId,7)
                       << std::left  << std::setw(16) << clipText(t.description,16)
                       << std::right << std::setw(11) << formatMoney(t.amount)
                       << "\n";
