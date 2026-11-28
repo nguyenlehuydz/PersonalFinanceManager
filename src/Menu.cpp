@@ -919,6 +919,11 @@ void Menu::handleChoiceStatistics(int choiceStats, bool& isRunningStats) {
             std::string walletId;
             std::getline(std::cin, walletId);
             long long totalIncome, totalExpense , netBalance;
+            Wallet *wal=financeManager.findWallet(walletId);
+            if(wal == nullptr){
+                std::cout << Color::RED << "  [ERROR] Invalid wallet id!\n" << Color::RESET;
+                break;
+            }
             financeManager.getTimeAndWalletStatistics(startDate,endDate,walletId,totalIncome,totalExpense,netBalance);
             std::cout << "\n  ----------------------------------------------------------------------------\n";
             std::cout << "  Wallet        : " << walletId << " -- " << financeManager.getWalletName(walletId) << "\n";
@@ -932,7 +937,19 @@ void Menu::handleChoiceStatistics(int choiceStats, bool& isRunningStats) {
                       << std::right << std::setw(13) << "Amount"
                       << "\n";
             std::cout << "    ------------------------------------------------------------------------\n";
-            
+            DynamicArray<Income>in=financeManager.getIncomesByWallet(walletId,startDate,endDate);
+            DynamicArray<Income>ex=financeManager.getExpensesByWallet(walletId,startDate,endDate);
+            if(!in.empty()||!ex.empty()){
+                for(auto tmp:in){
+                    std::cout << "    "
+                              << std::left  << std::setw(12) << tmp.date.toString()
+                              << std::left  << std::setw(9)  << ("INCOME")
+                              << std::left  << std::setw(17) << clipText(financeManager.getIncomeSourceName(tmp.sourceId), 17)
+                              << std::left  << std::setw(21) << clipText(tmp.description, 21)
+                              << std::right << std::setw(13) << formatMoney(t.amount)
+                              << "\n";
+                }
+            }
 
             std::cout << "    ------------------------------------------------------------------------\n";
             std::cout << "  Total Income  : " << std::right << std::setw(15) << formatMoney(totalIncome)  << " VND\n";
