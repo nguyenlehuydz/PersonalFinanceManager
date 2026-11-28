@@ -949,8 +949,16 @@ void Menu::handleChoiceStatistics(int choiceStats, bool& isRunningStats) {
                               << std::right << std::setw(13) << formatMoney(t.amount)
                               << "\n";
                 }
+                for(auto tmp:ex){
+                    std::cout << "    "
+                              << std::left  << std::setw(12) << tmp.date.toString()
+                              << std::left  << std::setw(9)  << ("INCOME")
+                              << std::left  << std::setw(17) << clipText(financeManager.getExpenseCategoryName(tmp.categoryId), 17)
+                              << std::left  << std::setw(21) << clipText(tmp.description, 21)
+                              << std::right << std::setw(13) << formatMoney(t.amount)
+                              << "\n";
+                }
             }
-
             std::cout << "    ------------------------------------------------------------------------\n";
             std::cout << "  Total Income  : " << std::right << std::setw(15) << formatMoney(totalIncome)  << " VND\n";
             std::cout << "  Total Expense : " << std::right << std::setw(15) << formatMoney(totalExpense) << " VND\n";
