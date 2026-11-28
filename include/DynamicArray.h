@@ -1,8 +1,7 @@
 #ifndef DynamicArray_h
 #define DynamicArray_h
 
-#include <bits/stdc++.h>
-
+#include <stdexcept>
 /*
 Nếu các ông muốn sử dụng thì chỉ cần khai báo DynamicArray<Kiểu dữ liệu các ôg cần> là nó sẽ ra được cái mảng động với kiểu dữ liệu các ông cần chèn vô
 Các lệnh trong này thì ý nghĩa như sau
@@ -93,6 +92,9 @@ public:
     }
 
     void remove(int index) {
+        if(index < 0 || index >= count){
+            throw std::out_of_range("DynamicArray::remove: index out of range");
+        }
         for (int i = index ; i < count - 1 ; i++) {
             data[i] = data[i + 1];
         }
@@ -104,18 +106,30 @@ public:
     }
 
     T& operator[](int index){
+        if (index < 0 || index >= count){
+            throw std::out_of_range("DynamicArray::operator[]: index out of range");
+        }
         return data[index];
     }
 
     const T& operator[](int index)const{
+        if (index < 0 || index >= count){
+            throw std::out_of_range("DynamicArray::operator[]: index out of range");
+        }
         return data[index];
     }
 
     T& at(int index){
+        if (index < 0 || index >= count){
+            throw std::out_of_range("DynamicArray::at: index out of range");
+        }
         return data[index];
     }
 
     const T& at(int index) const{
+        if (index < 0 || index >= count){
+            throw std::out_of_range("DynamicArray::at: index out of range");
+        }
         return data[index];
     }
 
